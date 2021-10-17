@@ -1,0 +1,22 @@
+{
+  "name": "backsistemacancer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alejandro2134/backSistemaCancer.git"
+  },
+  "author": "Alejandro Zapata Molina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Alejandro2134/backSistemaCancer/issues"
+  },
+  "homepage": "https://github.com/Alejandro2134/backSistemaCancer#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
