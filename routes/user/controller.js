@@ -1,5 +1,7 @@
 const store = require('./store');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../../config');
 
 const addUser = newUser => {
     return new Promise((resolve, reject) => {
@@ -17,6 +19,42 @@ const addUser = newUser => {
     })
 }
 
+const logInUser = user => {
+    return new Promise((resolve, reject) => {
+        store.logIn(user)
+            .then(userData => {
+                bcrypt.compare(user.contraseña, userData.contraseña)
+                    .then(result => {
+                        if(result) {
+                            const payload = { 
+                                sub: userData.userId,
+                                email: userData.email,
+                                admin: userData.esAdmin,
+                                nombre: userData.nombre  
+                            }
+                            const token = jwt.sign(payload, config.userJwtSecret, { expiresIn: '24h' })
+
+                            const result = {
+                                token,
+                                userdata: {
+                                    email: userData.email,
+                                    admin: userData.esAdmin,
+                                    nombre: userData.nombre  
+                                }
+                            }
+
+                            resolve(result);
+                        } else {
+                            reject('Contraseña incorrecta');
+                        }
+                    })  
+                    .catch(err => reject(err.toString()))
+            })
+            .catch(err => reject(err.toString()))
+    })
+}
+
 module.exports = {
-    addUser
+    addUser,
+    logInUser
 }
