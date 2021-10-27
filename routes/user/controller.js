@@ -6,7 +6,7 @@ const config = require('../../config');
 const addUser = newUser => {
     return new Promise((resolve, reject) => {
         const userPassword = newUser.contraseña;
-        
+
         bcrypt.hash(userPassword, 10)
             .then(hash => {
                 newUser.contraseña = hash;
