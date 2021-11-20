@@ -17,14 +17,40 @@ const addUser = async newUser => {
 
 const logIn = async user => {
     try {
-        const userData = await User.findOne({ where: { email: user.email } })
+        const userData = await User.findOne({ 
+            where: { 
+                email: user.email 
+            } 
+        })
+
         return userData;
     } catch (err) {
         throw new Error('El usuario no esta registrado');
     }
 }
 
+const updateUser = async(user, id) => {
+    try {
+        await User.update(
+        {
+            nombre: user.nombre,
+            email: user.email,
+            esAdmin: user.es_admin
+        }, 
+        {
+            where: {
+                id
+            }
+        })
+
+        return "Usuario actualizado correctamente";
+    } catch (err) {
+        throw new Error('El usuario no existe');
+    }
+}
+
 module.exports = {
     add: addUser,
-    logIn
+    logIn,
+    update: updateUser
 }

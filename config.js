@@ -9,4 +9,4 @@ const config = {
     dbHost: process.env.DB_HOST
 }
 
-module.exports = config;
+module.exports = config

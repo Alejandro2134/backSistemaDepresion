@@ -19,4 +19,14 @@ router.post('/login', (req, res) => {
         .catch(err => error(req, res, err, 500, ''))
 })
 
+router.put('/:id/', (req, res) => {
+    const user = req.body;
+    const { id } = req.params;
+    const token = req.headers.authorization.split(' ')[1]
+
+    controller.updateUser(user, id, token)
+        .then(response => succes(req, res, response, 200))
+        .catch(err => error(req, res, err, 500, ''))
+})
+
 module.exports = router;

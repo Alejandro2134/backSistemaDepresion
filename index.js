@@ -12,6 +12,6 @@ app.use(express.json());
 //Rutas de la app
 routesApp(app);
 
-app.listen(3000, () => {
-    console.log('Corriendo en el puerto 3000');
+app.listen(8000, () => {
+    console.log('Corriendo en el puerto 8000');
 })

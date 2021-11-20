@@ -54,7 +54,28 @@ const logInUser = user => {
     })
 }
 
+const updateUser = (user, id, token) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const payload = jwt.verify(token, config.userJwtSecret)
+            
+            if(payload.admin) {
+                store.update(user, id)
+                    .then(response => resolve(response))
+                    .catch(err => reject(err.toString()))
+            } else {
+                reject('No tiene permisos para realizar esta acción')
+            }
+        } catch (err) {
+            reject(err.toString())
+        }
+        
+        
+    })
+}
+
 module.exports = {
     addUser,
-    logInUser
+    logInUser,
+    updateUser
 }
