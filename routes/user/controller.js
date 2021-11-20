@@ -80,9 +80,24 @@ const getUsers  = () => {
     })
 }
 
+const deleteUser = (id, token) => {
+    return new Promise((resolve, reject) => {
+        const payload = jwt.verify(token, config.userJwtSecret)
+
+        if(payload.admin) {
+            store.delete(id)
+                .then(response => resolve(response))
+                .catch(err => reject(err.toString()))
+        } else {
+            reject('No tiene permisos para realizar esta acción')
+        }
+    })
+}
+
 module.exports = {
     addUser,
     logInUser,
     updateUser,
-    getUsers
+    getUsers,
+    deleteUser
 }

@@ -35,4 +35,13 @@ router.get('/', (req, res) => {
         .catch(err => error(req, res, err, 500, ''))
 })
 
+router.delete('/:id/', (req, res) => {
+    const { id } = req.params;
+    const token = req.headers.authorization.split(' ')[1]
+
+    controller.deleteUser(id, token)
+        .then(response => succes(req, res, response, 200))
+        .catch(err => error(req, res, err, 500, '')) 
+})
+
 module.exports = router;

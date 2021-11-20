@@ -58,9 +58,24 @@ const getUsers = async () => {
     }
 }
 
+const deleteUser = async (id) => {
+    try {
+        await User.destroy({
+            where: {
+                id
+            }
+        })
+
+        return 'Usuario eliminado'
+    } catch (err) {
+        throw new Error('El usuario no existe');
+    }
+}
+
 module.exports = {
     add: addUser,
     logIn,
     update: updateUser,
-    get: getUsers
+    get: getUsers,
+    delete: deleteUser
 }
