@@ -32,7 +32,7 @@ router.put('/:id/', (req, res) => {
 router.get('/', (req, res) => {
     controller.getUsers()
         .then(response => succes(req, res, response, 200))
-        .catch(err => req, res, err, 500, '')
+        .catch(err => error(req, res, err, 500, ''))
 })
 
 module.exports = router;
