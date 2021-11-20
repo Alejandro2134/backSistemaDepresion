@@ -72,8 +72,17 @@ const updateUser = (user, id, token) => {
     })
 }
 
+const getUsers  = () => {
+    return new Promise((resolve, reject) => {
+        store.get()
+            .then(response => resolve(response))
+            .catch(err => reject(err))
+    })
+}
+
 module.exports = {
     addUser,
     logInUser,
-    updateUser
+    updateUser,
+    getUsers
 }

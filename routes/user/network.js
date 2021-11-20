@@ -29,4 +29,10 @@ router.put('/:id/', (req, res) => {
         .catch(err => error(req, res, err, 500, ''))
 })
 
+router.get('/', (req, res) => {
+    controller.getUsers()
+        .then(response => succes(req, res, response, 200))
+        .catch(err => req, res, err, 500, '')
+})
+
 module.exports = router;

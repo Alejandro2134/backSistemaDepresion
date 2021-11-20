@@ -49,8 +49,18 @@ const updateUser = async(user, id) => {
     }
 }
 
+const getUsers = async () => {
+    try {
+        const users = await User.findAll();
+        return users;
+    } catch (err) {
+        throw new Error('Error interno');
+    }
+}
+
 module.exports = {
     add: addUser,
     logIn,
-    update: updateUser
+    update: updateUser,
+    get: getUsers
 }
