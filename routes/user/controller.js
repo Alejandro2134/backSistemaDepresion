@@ -69,8 +69,6 @@ const updateUser = (user, id, token) => {
         } catch (err) {
             reject(err.toString())
         }
-        
-        
     })
 }
 
