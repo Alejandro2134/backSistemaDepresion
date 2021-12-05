@@ -1,7 +1,14 @@
 const { Sequelize } = require('sequelize');
 const config = require('./config');
 
-const sequelize = new Sequelize(config.dbUrl)
+const sequelize = new Sequelize(config.dbUrl, {
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
+})
 
 const testDb = async () => {
     try {
