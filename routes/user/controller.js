@@ -94,10 +94,41 @@ const deleteUser = (id, token) => {
     })
 }
 
+const changePassword = (token, password) => {
+    return new Promise ((resolve, reject) => {
+        try {
+            const { sub } = jwt.verify(token, config.userJwtSecret)
+
+            store.getOne(sub)
+                .then(userData => {
+                    bcrypt.compare(password.nueva_contraseña, userData.contraseña)
+                        .then(result => {
+                            if(result) {
+                                reject('Las contraseñas son iguales')
+                            } else {
+                                bcrypt.hash(password.nueva_contraseña, 10)
+                                    .then(hash => {
+                                        store.changePassword(sub, hash)
+                                            .then(response => resolve(response))
+                                            .catch(err => reject(err.toString()))
+                                    })
+                                    .catch(err => reject(err))
+                            }
+                        })
+                }) 
+                .catch(err => reject(err.toString()))
+    
+        } catch (err) {
+            reject(err.toString())
+        }
+    })
+}
+
 module.exports = {
     addUser,
     logInUser,
     updateUser,
     getUsers,
-    deleteUser
+    deleteUser,
+    changePassword
 }

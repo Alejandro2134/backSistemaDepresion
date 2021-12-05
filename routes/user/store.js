@@ -72,10 +72,45 @@ const deleteUser = async (id) => {
     }
 }
 
+const getUserById = async id => {
+    try {
+        const user = await User.findOne({
+            where: {
+                id
+            }
+        })
+
+        return user;
+    } catch (err) {
+        throw new Error('El usuario no existe');
+    }
+} 
+
+const changePassword =  async (id, newPassword) => {
+    try {
+        await User.update(
+            {
+                contraseña: newPassword
+            },
+            {
+                where: {
+                    id
+                }
+            }
+        )
+
+        return 'Contraseña actualizada'
+    } catch (err) {
+        throw new Error('El usuario no existe');
+    }
+}
+
 module.exports = {
     add: addUser,
     logIn,
     update: updateUser,
     get: getUsers,
-    delete: deleteUser
+    delete: deleteUser,
+    changePassword,
+    getOne: getUserById
 }

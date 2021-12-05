@@ -44,4 +44,13 @@ router.delete('/:id/', (req, res) => {
         .catch(err => error(req, res, err, 500, '')) 
 })
 
+router.put('/change-password', (req, res) => {
+    const password = req.body;
+    const token = req.headers.authorization.split(' ')[1]
+
+    controller.changePassword(token, password)
+        .then(response => succes(req, res, response, 200))
+        .catch(err => error(req, res, err, 500, ''))
+})
+
 module.exports = router;
