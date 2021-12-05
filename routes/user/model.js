@@ -1,4 +1,5 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require('sequelize');
+const config = require('../../config');
 const sequelize = require('../../db');
 
 const User = sequelize.define('User', {
@@ -29,16 +30,18 @@ const User = sequelize.define('User', {
     }
 })
 
-const syncDatabase = async () => {
-    try {
-        await User.sync({ force: true });
-        console.log('La tabla fue recreada correctamente');
-    } catch (err) {
-        console.log(err);
+if(config.env == 'development') {
+    const syncDatabase = async () => {
+        try {
+            await User.sync({ force: true });
+            console.log('La tabla fue recreada correctamente');
+        } catch (err) {
+            console.log(err);
+        }
+        
     }
     
+    syncDatabase();
 }
-
-syncDatabase();
 
 module.exports = User;

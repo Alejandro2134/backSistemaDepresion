@@ -12,6 +12,11 @@ app.use(express.json());
 //Rutas de la app
 routesApp(app);
 
-app.listen(8000, () => {
-    console.log('Corriendo en el puerto 8000');
+let port = process.env.PORT;
+if(port == null || port == '') {
+    port = 8000;
+}
+
+app.listen(port, () => {
+    console.log('Corriendo en el puerto:' , port);
 })
