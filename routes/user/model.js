@@ -30,11 +30,25 @@ const User = sequelize.define('User', {
     }
 })
 
-if(config.env == 'development') {
+if(config.nodeEnv == 'development') {
     const syncDatabase = async () => {
         try {
             await User.sync({ force: true });
             console.log('La tabla fue recreada correctamente');
+        } catch (err) {
+            console.log(err);
+        }
+        
+    }
+    
+    syncDatabase();
+}
+
+if(config.nodeEnv == 'production') {
+    const syncDatabase = async () => {
+        try {
+            await User.sync({ force: false });
+            console.log('La tabla fue creada correctamente');
         } catch (err) {
             console.log(err);
         }
