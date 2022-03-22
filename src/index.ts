@@ -4,7 +4,7 @@ const Logger = logger(__filename);
 
 const main = async () => {
     try {
-        createDBConnection();
+        await createDBConnection();
         await startWebApp();
     } catch (err: unknown) {
         if (err instanceof Error)
@@ -12,9 +12,10 @@ const main = async () => {
     }
 };
 
-const createDBConnection = () => {
-    console.log('connection');
-}
+const createDBConnection = async () => {
+    const { testDb } = await import('@fnd/storage/postgresql/client/client');
+    await testDb();
+};
 
 const startWebApp = async () => {
     const { Server } = await import('@fnd/web/server');
