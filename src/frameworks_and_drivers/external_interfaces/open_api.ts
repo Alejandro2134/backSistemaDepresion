@@ -1,6 +1,6 @@
 import { middleware } from 'express-openapi-validator';
 
-const apiSpec = process.env.OPENAPI_FILE_PATH || '/spec';
+const apiSpec = process.env.OPENAPI_FILE_PATH || './scheme.yaml';
 const validateResponses = !!(
     process.env.OPENAPI_ENABLE_RESPONSE_VALIDATION &&
     process.env.OPENAPI_ENABLE_RESPONSE_VALIDATION.toLowerCase() === 'true'
