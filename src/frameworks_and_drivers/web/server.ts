@@ -9,6 +9,7 @@ import { OpenApiValidator, apiSpec } from '@fnd/external_interfaces/open_api';
 import logger from '../external_interfaces/logger';
 import errorHandler from '../../frameworks_and_drivers/web/middlewares/error/error_handler';
 import { requestLogging } from '@fnd/web/middlewares/logging/request_logging';
+import { routes as appRoutes } from './routes/index';
 
 /**Init logger */
 const Logger = logger(__filename);
@@ -30,7 +31,11 @@ export class Server {
         this.app.set('port', HTTP_PORT);
         //MIDDLEWARES
         /**Morgan to see logs in dev */
-        this.app.use(morgan());
+        this.app.use(
+            morgan().unless({
+                path: ['/', '/readiness', '/healthy'],
+            })
+        );
         /**To process json request */
         this.app.use(json());
         /**To give cors permissions */
@@ -47,6 +52,8 @@ export class Server {
     routes() {
         /**Middleare to log request bodies and queries */
         this.app.use(requestLogging());
+        /**App routes */
+        this.app.use(appRoutes);
     }
 
     configOpenAPi() {
