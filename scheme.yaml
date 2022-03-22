@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: sistema-cancer
+  description: Api Web
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: "Local server"
+  - url: https://secure-brushlands-86892.herokuapp.com
+    description: "Production server"
+tags:
+  - name: common
+    description: Common routes
+paths:
+  #COMMON
+  /:
+    get:
+      tags:
+        - common
+      summary: ''
+      description: ''
+      operationId: common:get
+      responses:
+        "200":
+          description: Service OK 👽
+  /healthy:
+    get:
+      tags:
+        - common
+      summary: ''
+      description: ''
+      operationId: common:healthy
+      responses:
+        "200":
+          description: Service OK 👽
+  /readiness:
+    get:
+      tags:
+        - common
+      summary: ''
+      description: ''
+      operationId: common:readiness
+      responses:
+        "200":
+          description: Service OK 👽
+
