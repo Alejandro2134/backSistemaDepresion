@@ -11,7 +11,29 @@ servers:
 tags:
   - name: common
     description: Common routes
+  - name: user
+    description: User routes
 paths:
+  #USER
+  /v1/users/create-one:
+    post:
+      tags:
+        - user
+      summary: create a user
+      description: http://localhost:3000/v1/users/create-one
+      operationId: user:create-one
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user-create-one"
+      responses:
+        "201":
+          description: user created correctly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
   #COMMON
   /:
     get:
@@ -43,4 +65,89 @@ paths:
       responses:
         "200":
           description: Service OK 👽
+components: 
+  schemas:
+    user-create-one:
+      title: user-create-one
+      type: object
+      properties:
+        nombre: 
+          type: string
+          example: Alejandro
+        email:
+          type: string
+          example: alejandro@gmail.com
+        contraseña:
+          type: string
+          example: contraseña123
+        es_admin:
+          type: boolean
+          example: false
+  #RESPONSES
+    api_response:
+      title: ApiResponse
+      required:
+        - result
+        - status
+      type: object
+      properties:
+        result:
+          type: object
+          description: Object according to the requested resource
+        status:
+          type: integer
+          description: HTTP code status
+          example: 200
+    api_error:
+      title: ApiError
+      required:
+        - message
+        - code
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message that describes the error
+        code:
+          type: integer
+          description: Code of error
+        metadata:
+          type: object
+          description: More info of error
+    list_reponse:
+      title: ListResponse
+      required:
+        - items
+        - total
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+          description: response elements according to the resource
+        total:
+          type: integer
+          description: total of items saved
+    api_list_reponse:
+      title: ApiListResponse
+      required:
+        - result
+        - status
+      type: object
+      properties:
+        result:
+          $ref: "#/components/schemas/list_reponse"
+        status:
+          type: integer
+          description: HTTP code status
+  responses:
+    response:
+      $ref: "#/components/schemas/api_response"
+    list_response:
+      $ref: "#/components/schemas/api_list_reponse"
+    error:
+      $ref: "#/components/schemas/api_error"
+    404_not_found:
+      $ref: "#/components/schemas/api_error"
 
