@@ -1,8 +1,5 @@
 import '@fnd/external_interfaces/env';
 import { Sequelize, Dialect } from 'sequelize';
-import logger from '@fnd/external_interfaces/logger';
-
-const Logger = logger(__filename);
 
 const databaseHost = process.env.DATABASE_HOST || 'localhost';
 const databaseName = process.env.DATABASE_NAME as string;
@@ -26,14 +23,4 @@ const sequelizeConnection = new Sequelize(
     }
 );
 
-const testDb = async () => {
-    try {
-        await sequelizeConnection.authenticate();
-        Logger.warn('DB connected correctly');
-    } catch (error: unknown) {
-        if (error instanceof Error)
-                Logger.error(`ERROR : ${error.message} STACK : ${error.stack}`);
-    }
-}
-
-export { sequelizeConnection, testDb };
+export { sequelizeConnection };
