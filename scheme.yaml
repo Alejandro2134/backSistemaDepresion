@@ -34,6 +34,65 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/response"
+  /v1/users/{id}/delete-one:
+    delete:
+      tags:
+        - user
+      summary: delete one user
+      description: http://localhost:3000/v1/users/{id}/delete-one
+      operationId: user:delete-one
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the user to delete
+      responses:
+        "204":
+          description: satisfactory removal
+        "404":
+          description: Not found user with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
+  /v1/users/{id}/update-one:
+    put:
+      tags:
+        - user
+      summary: update one user
+      description: http://localhost:3000/v1/users/{id}/update-one
+      operationId: user:update-one
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user-create-one"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the user to update
+      responses:
+        "200":
+          description: user updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "404":
+          description: Not found user with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
   #COMMON
   /:
     get:

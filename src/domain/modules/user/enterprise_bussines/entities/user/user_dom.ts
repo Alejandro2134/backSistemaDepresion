@@ -21,4 +21,12 @@ export class UserDOM implements IUserDOM {
         this.contraseña = item.contraseña;
         this.esAdmin = item.esAdmin;
     }
+
+    updateUser(item: IUserDOM) {
+        this.nombre = item?.nombre;
+        this.email = item?.email;
+        this.contraseña = item?.contraseña;
+        this.esAdmin = item?.esAdmin;
+        return Object.freeze(this);
+    }
 }
