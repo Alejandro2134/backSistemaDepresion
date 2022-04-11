@@ -1,5 +1,11 @@
-import { IOperations, IOptions } from "@fnd/storage/sql/client/interfaces/ioperations";
-import { UserDOM, IUserFDOM } from "@users/enterprise_bussines/entities/user/user_dom";
+import {
+    IOperations,
+    IOptions,
+} from '@fnd/storage/sql/client/interfaces/ioperations';
+import {
+    UserDOM,
+    IUserFDOM,
+} from '@users/enterprise_bussines/entities/user/user_dom';
 
 export class UsersRepository implements IOperations<UserDOM, IUserFDOM> {
     private implementation: IOperations<UserDOM, IUserFDOM>;

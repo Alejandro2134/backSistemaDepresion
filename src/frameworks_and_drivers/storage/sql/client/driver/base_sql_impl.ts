@@ -1,6 +1,8 @@
 import { IOperations, IOptions } from '../interfaces/ioperations';
 
-export abstract class BaseImplementation<TDom, FDom> implements IOperations<TDom, FDom> {
+export abstract class BaseImplementation<TDom, FDom>
+    implements IOperations<TDom, FDom>
+{
     abstract create(item: TDom): Promise<TDom>;
     abstract update(id: number, item: TDom): Promise<TDom | null>;
     abstract delete(id: number): Promise<number>;

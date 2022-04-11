@@ -1,11 +1,16 @@
-import { IUserFDOM, UserDOM } from "@users/enterprise_bussines/entities/user/user_dom";
-import { UserDAL } from "@fnd/storage/sql/models/user/user_dal";
-import { IWrapper } from "../../client/interfaces/iwrapper";
-import { User } from "@fnd/storage/sql/models/user/User";
-import { StorageError } from "@common/enterprise_business_rules/dto/errors/storage_error";
-import { IOperations } from "../../client/interfaces/ioperations";
+import {
+    IUserFDOM,
+    UserDOM,
+} from '@users/enterprise_bussines/entities/user/user_dom';
+import { UserDAL } from '@fnd/storage/sql/models/user/user_dal';
+import { IWrapper } from '../../client/interfaces/iwrapper';
+import { User } from '@fnd/storage/sql/models/user/User';
+import { StorageError } from '@common/enterprise_business_rules/dto/errors/storage_error';
+import { IOperations } from '../../client/interfaces/ioperations';
 
-export class UsersSQLImplementation implements IWrapper<UserDOM, UserDAL>, IOperations<UserDOM, IUserFDOM> {
+export class UsersSQLImplementation
+    implements IWrapper<UserDOM, UserDAL>, IOperations<UserDOM, IUserFDOM>
+{
     async create(item: UserDOM): Promise<UserDOM> {
         try {
             const itemDAL = this.fromDomToDal(item);
@@ -19,19 +24,17 @@ export class UsersSQLImplementation implements IWrapper<UserDOM, UserDAL>, IOper
 
     async update(id: number, item: UserDOM): Promise<UserDOM | null> {
         try {
-            const response = await User.update(
-                this.fromDomToDal(item), 
-                {
-                    where: {
-                        id: id
-                    },
-                    returning: true
-                }
-            );
+            const response = await User.update(this.fromDomToDal(item), {
+                where: {
+                    id: id,
+                },
+                returning: true,
+            });
 
             const resDAL = response[1];
-                
-            const resDOM = resDAL !== null ? this.fromDalToDom(resDAL[0]) : null;
+
+            const resDOM =
+                resDAL !== null ? this.fromDalToDom(resDAL[0]) : null;
             return resDOM;
         } catch (error) {
             throw new StorageError(error);
@@ -42,8 +45,8 @@ export class UsersSQLImplementation implements IWrapper<UserDOM, UserDAL>, IOper
         try {
             const res = await User.destroy({
                 where: {
-                    id: id
-                }
+                    id: id,
+                },
             });
 
             return res;
@@ -84,7 +87,7 @@ export class UsersSQLImplementation implements IWrapper<UserDOM, UserDAL>, IOper
             contraseña: item.contraseña,
             email: item.email,
             es_admin: item.esAdmin,
-            nombre: item.nombre
+            nombre: item.nombre,
         });
 
         return entity;
@@ -95,7 +98,7 @@ export class UsersSQLImplementation implements IWrapper<UserDOM, UserDAL>, IOper
             contraseña: item.contraseña,
             email: item.email,
             esAdmin: item.es_admin,
-            nombre: item.nombre
+            nombre: item.nombre,
         });
 
         return entity;

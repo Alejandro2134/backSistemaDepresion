@@ -14,14 +14,16 @@ const main = async () => {
 };
 
 const createDBConnection = async () => {
-    const { sequelizeConnection } = await import('@fnd/storage/sql/client/client');
+    const { sequelizeConnection } = await import(
+        '@fnd/storage/sql/client/client'
+    );
     await sequelizeConnection.authenticate();
 };
 
 const dbInit = async () => {
     const { dbInit } = await import('@fnd/storage/sql/client/init');
     dbInit();
-}
+};
 
 const startWebApp = async () => {
     const { Server } = await import('@fnd/web/server');
