@@ -8,5 +8,6 @@ const router = Router();
 router.post('/create-one', controller.createOne);
 router.delete('/:id/delete-one', controller.deleteOne);
 router.put('/:id/update-one', controller.updateOne);
+router.get('/get-all', controller.getAll);
 
 export { router };

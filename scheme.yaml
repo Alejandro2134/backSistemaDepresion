@@ -93,6 +93,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/404_not_found"
+  /v1/users/get-all:
+    get:
+      tags:
+        - user
+      summary: Get all users
+      description: http://localhost:3000/v1/users/get-all
+      operationId: user:get-all
+      responses:
+        200:
+          description: get all users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/list_response"
   #COMMON
   /:
     get:

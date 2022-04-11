@@ -14,7 +14,7 @@ const usersRepo: UsersRepository = new UsersRepository(
 const createOne = buildCreateUsers({ usersRepo });
 const deleteOne = buildDeleteOne({ usersRepo });
 const updateOne = buildUpdateOne({ usersRepo });
-const getAll = buildGetAll();
+const getAll = buildGetAll({ usersRepo });
 
 const service = {
     createOne,
