@@ -1,9 +1,12 @@
-import { IOperations } from "@fnd/storage/sql/client/interfaces/ioperations";
-import { IUserDOM, IUserFDOM } from "@users/enterprise_bussines/entities/user/user_dom";
+import { IOperations } from '@fnd/storage/sql/client/interfaces/ioperations';
+import {
+    IUserDOM,
+    IUserFDOM,
+} from '@users/enterprise_bussines/entities/user/user_dom';
 
 type Dependencies = {
     usersRepo: IOperations<IUserDOM, IUserFDOM>;
-}
+};
 
 const build = ({ usersRepo }: Dependencies) => {
     const findAll = async () => {
@@ -13,11 +16,11 @@ const build = ({ usersRepo }: Dependencies) => {
 
     const count = async () => {
         return await usersRepo.countRegisters({});
-    }
+    };
 
     return {
         findAll,
-        count
+        count,
     };
 };
 

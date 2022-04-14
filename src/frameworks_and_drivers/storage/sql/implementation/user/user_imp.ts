@@ -13,6 +13,7 @@ export class UsersSQLImplementation
 {
     async create(item: UserDOM): Promise<UserDOM> {
         try {
+            console.log(item);
             const itemDAL = this.fromDomToDal(item);
             const resDAL = await User.create(itemDAL);
             const resDOM = this.fromDalToDom(resDAL);
