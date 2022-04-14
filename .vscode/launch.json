@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/src/frameworks_and_drivers/storage/sql/implementation/user/user_imp.ts",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ],
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach by Port",
+            "port": 32250
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Docker: Attach to Node api-web",
+            "remoteRoot": "/usr/src/app",
+            "port": 30250,
+            "protocol": "inspector",
+            "localRoot": "/src",
+            "address": "localhost"
+        },
+    ]
+}
