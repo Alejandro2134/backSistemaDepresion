@@ -23,11 +23,11 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
         }
     }
 
-    async update(id: number, item: UserDOM): Promise<UserDOM | null> {
+    async update(email: string, item: UserDOM): Promise<UserDOM | null> {
         try {
             const response = await User.update(this.fromDomToDal(item), {
                 where: {
-                    id: id,
+                    email: email,
                 },
                 returning: true,
             });

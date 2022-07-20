@@ -1,7 +1,7 @@
 export interface IOperations<T, FDom> {
     //Writing
     create(item: T): Promise<T>;
-    update(id: number, item: T): Promise<T | null>;
+    update(email: string, item: T): Promise<T | null>;
     delete(id: number): Promise<number>;
     //Reading
     getAll(filter: FDom, options?: IOptions): Promise<T[]>;

@@ -35,11 +35,11 @@ export class UserController {
 
     async updateOne(req: Request, res: Response, next: NextFunction) {
         try {
-            const { id } = req.params;
+            const { email } = req.params;
             const body = req.body;
 
             const result = await service.updateOne(
-                +id,
+                email,
                 mapper.fromApiToDom(body)
             );
 

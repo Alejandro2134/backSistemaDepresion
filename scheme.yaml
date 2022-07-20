@@ -59,27 +59,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/404_not_found"
-  /v1/users/{id}/update-one:
+  /v1/users/{email}/update-one:
     put:
       tags:
         - user
       summary: update one user
-      description: http://localhost:3000/v1/users/{id}/update-one
+      description: http://localhost:3000/v1/users/{email}/update-one
       operationId: user:update-one
       requestBody: 
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/user-create-one"
+              $ref: "#/components/schemas/user-update-one"
       parameters:
-        - name: id
+        - name: email
           in: path
           required: true
           style: simple
           schema:
-            type: number
-            example: 1
-          description: The id of the user to update
+            type: string
+            example: alejandro@gmail.com
+          description: The email of the user to update
       responses:
         "200":
           description: user updated
@@ -88,7 +88,7 @@ paths:
               schema:
                 $ref: "#/components/responses/response"
         "404":
-          description: Not found user with provided id
+          description: Not found user with provided email
           content:
             application/json:
               schema:
@@ -172,12 +172,28 @@ components:
         email:
           type: string
           example: alejandro@gmail.com
-        contraseña:
-          type: string
-          example: contraseña123
         es_admin:
           type: boolean
           example: false
+    user-update-one:
+      title: user-update-one
+      type: object
+      properties:
+        cedula:
+          type: string
+          example: '1233912554'
+        nombre: 
+          type: string
+          example: Alejandro
+        email:
+          type: string
+          example: alejandro@gmail.com
+        es_admin:
+          type: boolean
+          example: false
+        contraseña:
+          type: string
+          example: hola123
     user-login:
       title: user-login
       type: object

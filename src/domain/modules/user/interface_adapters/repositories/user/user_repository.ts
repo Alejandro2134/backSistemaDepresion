@@ -17,8 +17,8 @@ export class UsersRepository implements IOperations<UserDOM, IUserFDOM> {
     async create(item: UserDOM): Promise<UserDOM> {
         return await this.implementation.create(item);
     }
-    async update(id: number, item: UserDOM): Promise<UserDOM | null> {
-        return await this.implementation.update(id, item);
+    async update(email: string, item: UserDOM): Promise<UserDOM | null> {
+        return await this.implementation.update(email, item);
     }
     async delete(id: number): Promise<number> {
         return await this.implementation.delete(id);
