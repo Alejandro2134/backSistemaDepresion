@@ -2,7 +2,7 @@ export interface IUserDOM {
     cedula: string;
     nombre: string;
     email: string;
-    contraseña: string;
+    contraseña: string | null;
     esAdmin: boolean;
 }
 
@@ -20,7 +20,7 @@ export class UserDOM implements IUserDOM {
     cedula: string;
     nombre: string;
     email: string;
-    contraseña: string;
+    contraseña: string | null;
     esAdmin: boolean;
 
     constructor(item: IUserDOM) {

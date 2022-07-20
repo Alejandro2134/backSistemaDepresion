@@ -7,7 +7,7 @@ export class User extends Model<IUserDAL> implements IUserDAL {
     cedula!: string;
     nombre!: string;
     email!: string;
-    contraseña!: string;
+    contraseña!: string | null;
     es_admin!: boolean;
 }
 
@@ -35,7 +35,7 @@ User.init(
         },
         contraseña: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         es_admin: {
             type: DataTypes.BOOLEAN,

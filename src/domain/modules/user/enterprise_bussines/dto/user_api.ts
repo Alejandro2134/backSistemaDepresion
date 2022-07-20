@@ -2,7 +2,7 @@ export interface IUserAPI {
     cedula: string;
     nombre: string;
     email: string;
-    contraseña: string;
+    contraseña: string | null;
     es_admin: boolean;
 }
 
@@ -10,7 +10,7 @@ export class UserAPI implements IUserAPI {
     cedula: string;
     nombre: string;
     email: string;
-    contraseña: string;
+    contraseña: string | null;
     es_admin: boolean;
 
     constructor(item: IUserAPI) {
