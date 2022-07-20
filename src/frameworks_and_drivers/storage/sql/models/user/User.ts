@@ -4,6 +4,7 @@ import { IUserDAL } from './user_dal';
 
 export class User extends Model<IUserDAL> implements IUserDAL {
     id!: number;
+    cedula!: string;
     nombre!: string;
     email!: string;
     contraseña!: string;
@@ -21,6 +22,11 @@ User.init(
         nombre: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        cedula: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
         },
         email: {
             type: DataTypes.STRING,

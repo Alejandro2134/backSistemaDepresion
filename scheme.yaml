@@ -107,6 +107,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/list_response"
+  /v1/users/login:
+    post:
+      tags:
+        - user
+      summary: login user
+      description: http://localhost:3000/v1/users/login
+      operationId: user:login
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/user-login"
+      responses:
+        200:
+          description: correct login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/list_response"
   #COMMON
   /:
     get:
@@ -144,6 +163,9 @@ components:
       title: user-create-one
       type: object
       properties:
+        cedula:
+          type: string
+          example: '1233912554'
         nombre: 
           type: string
           example: Alejandro
@@ -156,6 +178,16 @@ components:
         es_admin:
           type: boolean
           example: false
+    user-login:
+      title: user-login
+      type: object
+      properties:
+        email:
+          type: string
+          example: alejandro@gmail.com
+        contraseña:
+          type: string
+          example: contraseña123
   #RESPONSES
     api_response:
       title: ApiResponse

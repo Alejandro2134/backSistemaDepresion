@@ -2,18 +2,18 @@ import {
     IUserFDOM,
     UserDOM,
 } from '@users/enterprise_bussines/entities/user/user_dom';
-import { UserDAL } from '@fnd/storage/sql/models/user/user_dal';
-import { IWrapper } from '../../client/interfaces/iwrapper';
+import { IUserFDAL, UserDAL } from '@fnd/storage/sql/models/user/user_dal';
+import { IFilterWrapper, IWrapper } from '../../client/interfaces/iwrapper';
 import { User } from '@fnd/storage/sql/models/user/User';
 import { StorageError } from '@common/enterprise_business_rules/dto/errors/storage_error';
-import { IOperations } from '../../client/interfaces/ioperations';
+import { BaseImplementation } from '../../client/driver/base_sql_impl';
+import { fromCamelToSnake } from '@fnd/helpers/from_camel_to_snake';
 
-export class UsersSQLImplementation
-    implements IWrapper<UserDOM, UserDAL>, IOperations<UserDOM, IUserFDOM>
+export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDOM>
+    implements IWrapper<UserDOM, UserDAL>, IFilterWrapper<IUserFDOM, IUserFDAL>
 {
     async create(item: UserDOM): Promise<UserDOM> {
         try {
-            console.log(item);
             const itemDAL = this.fromDomToDal(item);
             const resDAL = await User.create(itemDAL);
             const resDOM = this.fromDalToDom(resDAL);
@@ -56,9 +56,11 @@ export class UsersSQLImplementation
         }
     }
 
-    async getAll(): Promise<UserDOM[]> {
+    async getAll(filter: IUserFDOM): Promise<UserDOM[]> {
         try {
-            const resDAL = await User.findAll();
+            const resDAL = await User.findAll({
+                where: this.filterDomToDal(filter)   
+            });
             const resDOM = resDAL.map(this.fromDalToDom);
             return resDOM;
         } catch (error) {
@@ -85,6 +87,7 @@ export class UsersSQLImplementation
 
     fromDomToDal(item: UserDOM): UserDAL {
         const entity = new UserDAL({
+            cedula: item.cedula,
             contraseña: item.contraseña,
             email: item.email,
             es_admin: item.esAdmin,
@@ -96,6 +99,7 @@ export class UsersSQLImplementation
 
     fromDalToDom(item: User): UserDOM {
         const entity = new UserDOM({
+            cedula: item.cedula,
             contraseña: item.contraseña,
             email: item.email,
             esAdmin: item.es_admin,
@@ -103,5 +107,22 @@ export class UsersSQLImplementation
         });
 
         return entity;
+    }
+
+    filterDomToDal(item: IUserFDOM): IUserFDAL {
+        const mapFilter: IUserFDAL = {}
+
+        for(const key in item) {
+            switch(key) {
+                case 'email':
+                    mapFilter[key] = item[key];
+                    break;
+                case 'esAdmin':
+                    mapFilter[fromCamelToSnake(key)] = item[key];
+                    break;
+            }
+        }
+
+        return mapFilter;
     }
 }

@@ -53,6 +53,7 @@ export class UserController {
             next(err);
         }
     }
+    
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const result = await service.getAll.findAll();
@@ -64,6 +65,22 @@ export class UserController {
                     new ListResponse(result.map(mapper.fromDomToApi), count)
                 )
             );
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async login(req: Request, res: Response, next: NextFunction) {
+        try {
+            const body = req.body;
+            const token = await service.login(body);
+
+            res.status(HTTPCodesEnum.SUCCESSFUL).json(
+                new ApiResponse(
+                    HTTPCodesEnum.SUCCESSFUL,
+                    token
+                )
+            )
         } catch (err) {
             next(err);
         }
