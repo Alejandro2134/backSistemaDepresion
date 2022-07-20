@@ -3,7 +3,6 @@ import {
     IUserFDOM,
 } from '@users/enterprise_bussines/entities/user/user_dom';
 import { IOperations } from '@fnd/storage/sql/client/interfaces/ioperations';
-import { hashPassword } from '@fnd/helpers/password_handler';
 
 type Dependencies = {
     usersRepo: IOperations<IUserDOM, IUserFDOM>;
@@ -11,7 +10,7 @@ type Dependencies = {
 
 const build = ({ usersRepo }: Dependencies) => {
     const execute = async (item: IUserDOM) => {
-        item.contraseña = hashPassword(item.contraseña);
+        item.contraseña = null;
         const createdUser = await usersRepo.create(item);
         return createdUser;
     };
