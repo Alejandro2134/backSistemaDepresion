@@ -1,4 +1,5 @@
 export interface IUserAPI {
+    cedula: string;
     nombre: string;
     email: string;
     contraseña: string;
@@ -6,12 +7,14 @@ export interface IUserAPI {
 }
 
 export class UserAPI implements IUserAPI {
+    cedula: string;
     nombre: string;
     email: string;
     contraseña: string;
     es_admin: boolean;
 
     constructor(item: IUserAPI) {
+        this.cedula = item.cedula;
         this.nombre = item.nombre;
         this.email = item.email;
         this.contraseña = item.contraseña;
