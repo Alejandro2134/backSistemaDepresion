@@ -29,7 +29,8 @@ const build = ({ usersRepo }: Dependencies) => {
 
                     return {
                         token: token,
-                        es_admin: user[0].esAdmin
+                        es_admin: user[0].esAdmin,
+                        email: user[0].email
                     };
                 } else {
                     throw new ErrorBadRequest(CREDENTIALS_ERROR);
