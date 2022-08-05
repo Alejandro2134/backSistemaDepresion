@@ -1,4 +1,5 @@
 export interface IUserAPI {
+    id: number;
     cedula: string;
     nombre: string;
     email: string;
@@ -7,6 +8,7 @@ export interface IUserAPI {
 }
 
 export class UserAPI implements IUserAPI {
+    id: number;
     cedula: string;
     nombre: string;
     email: string;
@@ -14,6 +16,7 @@ export class UserAPI implements IUserAPI {
     es_admin: boolean;
 
     constructor(item: IUserAPI) {
+        this.id = item.id;
         this.cedula = item.cedula;
         this.nombre = item.nombre;
         this.email = item.email;

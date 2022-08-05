@@ -1,4 +1,5 @@
 export interface IUserDOM {
+    id: number;
     cedula: string;
     nombre: string;
     email: string;
@@ -17,6 +18,7 @@ export interface IUserFDOM {
 }
 
 export class UserDOM implements IUserDOM {
+    id: number;
     cedula: string;
     nombre: string;
     email: string;
@@ -24,6 +26,7 @@ export class UserDOM implements IUserDOM {
     esAdmin: boolean;
 
     constructor(item: IUserDOM) {
+        this.id = item.id;
         this.cedula = item.cedula;
         this.nombre = item.nombre;
         this.email = item.email;

@@ -8,6 +8,7 @@ import {
 export class UserMapper implements IMapperAPI<UserDOM, UserAPI> {
     fromApiToDom(item: UserAPI, opts?: any): UserDOM {
         const dom = new UserDOM({
+            id: item.id,
             cedula: item.cedula,
             contraseña: item.contraseña,
             email: item.email,
@@ -20,6 +21,7 @@ export class UserMapper implements IMapperAPI<UserDOM, UserAPI> {
 
     fromDomToApi(item: IUserDOM, opts?: any): UserAPI {
         const api = new UserAPI({
+            id: item.id,
             cedula: item.cedula,
             contraseña: item.contraseña,
             email: item.email,

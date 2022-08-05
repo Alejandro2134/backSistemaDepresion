@@ -87,6 +87,7 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
 
     fromDomToDal(item: UserDOM): UserDAL {
         const entity = new UserDAL({
+            id: item.id,
             cedula: item.cedula,
             contraseña: item.contraseña,
             email: item.email,
@@ -99,6 +100,7 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
 
     fromDalToDom(item: User): UserDOM {
         const entity = new UserDOM({
+            id: item.id,
             cedula: item.cedula,
             contraseña: item.contraseña,
             email: item.email,
