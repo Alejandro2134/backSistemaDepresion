@@ -7,8 +7,12 @@ export interface IUserDAL {
     es_admin: boolean;
 }
 
+interface IOperators {
+    [index: symbol]: any;
+}
+
 export interface IUserFDAL {
-    email?: string;
+    email?: string | IOperators;
     es_admin?: boolean;
 }
 
