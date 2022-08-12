@@ -10,6 +10,7 @@ import logger from '../external_interfaces/logger';
 import errorHandler from '../../frameworks_and_drivers/web/middlewares/error/error_handler';
 import { requestLogging } from '@fnd/web/middlewares/logging/request_logging';
 import { routes as appRoutes } from './routes/index';
+import checkToken from './middlewares/auth/check_token';
 
 /**Init logger */
 const Logger = logger(__filename);
@@ -47,6 +48,20 @@ export class Server {
             swaggerUi.serve,
             swaggerUi.setup(swaggerDocument)
         );
+        /**Check Token and add User property on request */
+        this.app.use(
+            checkToken().unless({
+                path: [
+                    '/',
+                    '/readiness',
+                    '/healthy',
+                    '/v1/users/login',
+                    /^\/v1\/users\/.*\/update-one/,
+                    OPENAPI_SPEC,
+                    OPENAPI_DOCS,
+                ]
+            })
+        )
     }
 
     routes() {

@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: sistema-cancer
+  title: sistema-depresion
   description: Api Web
   version: 1.0.0
 servers:
@@ -13,6 +13,8 @@ tags:
     description: Common routes
   - name: user
     description: User routes
+  - name: question
+    description: Question routes
 paths:
   #USER
   /v1/users/create-one:
@@ -22,6 +24,8 @@ paths:
       summary: create a user
       description: http://localhost:3000/v1/users/create-one
       operationId: user:create-one
+      security:
+        - BearerAuth: []
       requestBody: 
         content:
           application/json:
@@ -34,6 +38,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   /v1/users/{id}/delete-one:
     delete:
       tags:
@@ -41,6 +57,8 @@ paths:
       summary: delete one user
       description: http://localhost:3000/v1/users/{id}/delete-one
       operationId: user:delete-one
+      security:
+        - BearerAuth: []
       parameters:
         - name: id
           in: path
@@ -59,6 +77,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/404_not_found"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   /v1/users/{email}/update-one:
     put:
       tags:
@@ -100,6 +130,21 @@ paths:
       summary: Get all users
       description: http://localhost:3000/v1/users/get-all
       operationId: user:get-all
+      parameters:
+        - in: query
+          name: email
+          required: false
+          schema:
+            type: string
+            example: alejandro@gmail.com
+        - in: query
+          name: es_admin
+          required: false
+          schema: 
+            type: boolean
+            example: false
+      security:
+        - BearerAuth: []
       responses:
         200:
           description: get all users
@@ -107,6 +152,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/list_response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   /v1/users/login:
     post:
       tags:
@@ -157,7 +214,12 @@ paths:
       responses:
         "200":
           description: Service OK 👽
-components: 
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     user-create-one:
       title: user-create-one
