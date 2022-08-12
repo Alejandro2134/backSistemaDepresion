@@ -7,7 +7,8 @@ import { IFilterWrapper, IWrapper } from '../../client/interfaces/iwrapper';
 import { User } from '@fnd/storage/sql/models/user/User';
 import { StorageError } from '@common/enterprise_business_rules/dto/errors/storage_error';
 import { BaseImplementation } from '../../client/driver/base_sql_impl';
-import { fromCamelToSnake } from '@fnd/helpers/from_camel_to_snake';
+import { camelToSnake } from '@fnd/helpers/from_camel_to_snake';
+import { Op } from 'sequelize';
 
 export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDOM>
     implements IWrapper<UserDOM, UserDAL>, IFilterWrapper<IUserFDOM, IUserFDAL>
@@ -18,8 +19,8 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
             const resDAL = await User.create(itemDAL);
             const resDOM = this.fromDalToDom(resDAL);
             return resDOM;
-        } catch (error: any) {
-            throw new StorageError(error.message);
+        } catch (error) {
+            throw new StorageError(error);
         }
     }
 
@@ -72,14 +73,16 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
         try {
             const resDAL = await User.findByPk(id);
             return resDAL ? this.fromDalToDom(resDAL) : null;
-        } catch (error: any) {
-            throw new StorageError(error.message);
+        } catch (error) {
+            throw new StorageError(error);
         }
     }
 
-    async countRegisters(): Promise<number> {
+    async countRegisters(filter: IUserFDOM): Promise<number> {
         try {
-            return await User.count();
+            return await User.count({
+                where: this.filterDomToDal(filter)
+            });
         } catch (error) {
             throw new StorageError(error);
         }
@@ -112,15 +115,19 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
     }
 
     filterDomToDal(item: IUserFDOM): IUserFDAL {
-        const mapFilter: IUserFDAL = {}
+        const mapFilter: IUserFDAL = {
+
+        }
 
         for(const key in item) {
             switch(key) {
                 case 'email':
-                    mapFilter[key] = item[key];
+                    mapFilter[key] = {
+                        [Op.iLike]: `${item[key]}%`
+                    }
                     break;
                 case 'esAdmin':
-                    mapFilter[fromCamelToSnake(key)] = item[key];
+                    mapFilter[camelToSnake(key)] = item[key];
                     break;
             }
         }

@@ -54,10 +54,11 @@ export class UserController {
         }
     }
     
-    async getAll(req: Request, res: Response, next: NextFunction) {
+    async getAll(req: any, res: Response, next: NextFunction) {
         try {
-            const result = await service.getAll.findAll();
-            const count = await service.getAll.count();
+            const { filter } = req.query;
+            const result = await service.getAll.findAll(filter);
+            const count = await service.getAll.count(filter);
 
             res.status(HTTPCodesEnum.SUCCESSFUL).json(
                 new ApiResponse(

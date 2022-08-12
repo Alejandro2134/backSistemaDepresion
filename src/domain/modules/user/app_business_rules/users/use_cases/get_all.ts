@@ -9,13 +9,13 @@ type Dependencies = {
 };
 
 const build = ({ usersRepo }: Dependencies) => {
-    const findAll = async () => {
-        const result = await usersRepo.getAll({});
+    const findAll = async (filter: IUserFDOM) => {
+        const result = await usersRepo.getAll(filter);
         return result;
     };
 
-    const count = async () => {
-        return await usersRepo.countRegisters({});
+    const count = async (filter: IUserFDOM) => {
+        return await usersRepo.countRegisters(filter);
     };
 
     return {
