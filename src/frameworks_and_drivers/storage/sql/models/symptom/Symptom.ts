@@ -2,6 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import { sequelizeConnection } from "../../client/client";
 import { ISymptomDAL } from "./symptom_dal";
 import { DepresionType } from "../depresion_type/DepresionType";
+import { Question } from "../question/Question";
 
 export class Symptom extends Model<ISymptomDAL> implements ISymptomDAL {
     id!: number;
@@ -33,9 +34,5 @@ Symptom.init(
     }
 );
 
-Symptom.hasMany(DepresionType, {
-    foreignKey: 'sintoma_id'
-});
-DepresionType.belongsTo(Symptom, {
-    foreignKey: 'sintoma_id'
-});
+Symptom.belongsToMany(Question, { through: 'SymptomQuestion' });
+Symptom.belongsToMany(DepresionType, { through: 'DepresionTypeSymptom' });

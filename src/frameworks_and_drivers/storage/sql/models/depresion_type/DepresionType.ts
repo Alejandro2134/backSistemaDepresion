@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelizeConnection } from "../../client/client";
 import { IDepresionTypeDAL } from "./depresion_type_dal";
+import { Symptom } from "../symptom/Symptom";
 
 export class DepresionType extends Model<IDepresionTypeDAL> implements IDepresionTypeDAL {
     id!: number;
@@ -31,3 +32,5 @@ DepresionType.init(
         freezeTableName: true,
     }
 )
+
+DepresionType.belongsToMany(Symptom, { through: 'DepresionTypeSymptom' });

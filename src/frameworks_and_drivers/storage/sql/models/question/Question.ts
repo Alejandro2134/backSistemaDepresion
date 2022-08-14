@@ -28,9 +28,5 @@ Question.init(
         freezeTableName: true,
     }
 )
-Question.hasMany(Symptom, {
-    foreignKey: 'pregunta_id'
-});
-Symptom.belongsTo(Question, {
-    foreignKey: 'pregunta_id'
-});
+
+Question.belongsToMany(Symptom, { through: 'SymptomQuestion' });
