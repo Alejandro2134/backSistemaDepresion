@@ -1,7 +1,6 @@
-import { DataTypes, Model } from "sequelize/types";
+import { DataTypes, Model } from "sequelize";
 import { IQuestionDAL } from "./question_dal";
 import { sequelizeConnection } from '../../client/client';
-import { Symptom } from "../symptom/Symptom";
 
 export class Question extends Model<IQuestionDAL> implements IQuestionDAL {
     id!: number;
@@ -28,5 +27,3 @@ Question.init(
         freezeTableName: true,
     }
 )
-
-Question.belongsToMany(Symptom, { through: 'SymptomQuestion' });

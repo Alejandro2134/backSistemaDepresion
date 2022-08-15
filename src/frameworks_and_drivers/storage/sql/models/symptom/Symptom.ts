@@ -1,13 +1,10 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelizeConnection } from "../../client/client";
 import { ISymptomDAL } from "./symptom_dal";
-import { DepresionType } from "../depresion_type/DepresionType";
-import { Question } from "../question/Question";
 
 export class Symptom extends Model<ISymptomDAL> implements ISymptomDAL {
     id!: number;
     sintoma!: string;
-    pregunta_id!: number;
 }
 
 Symptom.init(
@@ -22,9 +19,6 @@ Symptom.init(
             type: DataTypes.STRING,
             allowNull: false
         },
-        pregunta_id: {
-            type: DataTypes.INTEGER
-        }
     },
     {
         sequelize: sequelizeConnection,
@@ -33,6 +27,3 @@ Symptom.init(
         freezeTableName: true,
     }
 );
-
-Symptom.belongsToMany(Question, { through: 'SymptomQuestion' });
-Symptom.belongsToMany(DepresionType, { through: 'DepresionTypeSymptom' });
