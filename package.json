@@ -9,7 +9,8 @@
     "dev": "nodemon | pino-pretty",
     "dev:debug": "nodemon --config nodemon.debug.json | pino-pretty",
     "style": "prettier --check ./src",
-    "lint": "eslint . --ext .ts --quiet"
+    "lint": "eslint . --ext .ts --quiet",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
     "eslint": "^8.11.0",
+    "husky": "^8.0.1",
     "nodemon": "^2.0.14",
     "pino-pretty": "^7.5.4",
     "prettier": "^2.6.0",
