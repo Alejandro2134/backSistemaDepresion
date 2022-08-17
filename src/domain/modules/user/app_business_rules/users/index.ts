@@ -11,10 +11,13 @@ import { build as buildLogin } from './use_cases/login';
 const usersRepo: UsersRepository = new UsersRepository(
     new UsersSQLImplementation()
 );
+const usersRepoAditionalOperations: UsersRepository = new UsersRepository(
+    new UsersSQLImplementation()
+);
 
 const createOne = buildCreateUsers({ usersRepo });
 const deleteOne = buildDeleteOne({ usersRepo });
-const updateOne = buildUpdateOne({ usersRepo });
+const updateOne = buildUpdateOne({ usersRepo, usersRepoAditionalOperations });
 const getAll = buildGetAll({ usersRepo });
 const login = buildLogin({ usersRepo });
 

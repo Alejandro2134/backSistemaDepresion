@@ -1,4 +1,5 @@
 import {
+    IAditionalOperations,
     IOperations,
     IOptions,
 } from '@fnd/storage/sql/client/interfaces/ioperations';
@@ -7,18 +8,24 @@ import {
     IUserFDOM,
 } from '@users/enterprise_bussines/entities/user/user_dom';
 
-export class UsersRepository implements IOperations<UserDOM, IUserFDOM> {
-    private implementation: IOperations<UserDOM, IUserFDOM>;
+interface Implementation extends IOperations<UserDOM, IUserFDOM>, IAditionalOperations<UserDOM> {}
 
-    constructor(item: IOperations<UserDOM, UserDOM>) {
+export class UsersRepository implements Implementation {
+    private implementation: Implementation;
+
+    constructor(item: Implementation) {
         this.implementation = item;
+    }
+
+    async updateByEmail(email: string, item: UserDOM): Promise<UserDOM | null> {
+        return await this.implementation.updateByEmail(email, item);
     }
 
     async create(item: UserDOM): Promise<UserDOM> {
         return await this.implementation.create(item);
     }
-    async update(email: string, item: UserDOM): Promise<UserDOM | null> {
-        return await this.implementation.update(email, item);
+    async update(id: number, item: UserDOM): Promise<UserDOM | null> {
+        return await this.implementation.update(id, item);
     }
     async delete(id: number): Promise<number> {
         return await this.implementation.delete(id);

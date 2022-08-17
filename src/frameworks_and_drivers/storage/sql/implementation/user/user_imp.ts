@@ -9,9 +9,10 @@ import { StorageError } from '@common/enterprise_business_rules/dto/errors/stora
 import { BaseImplementation } from '../../client/driver/base_sql_impl';
 import { camelToSnake } from '@fnd/helpers/from_camel_to_snake';
 import { Op } from 'sequelize';
+import { IAditionalOperations } from '../../client/interfaces/ioperations';
 
 export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDOM>
-    implements IWrapper<UserDOM, UserDAL>, IFilterWrapper<IUserFDOM, IUserFDAL>
+    implements IWrapper<UserDOM, UserDAL>, IFilterWrapper<IUserFDOM, IUserFDAL>, IAditionalOperations<UserDOM>
 {
     async create(item: UserDOM): Promise<UserDOM> {
         try {
@@ -24,11 +25,11 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
         }
     }
 
-    async update(email: string, item: UserDOM): Promise<UserDOM | null> {
+    async update(id: number, item: UserDOM): Promise<UserDOM | null> {
         try {
             const response = await User.update(this.fromDomToDal(item), {
                 where: {
-                    email: email,
+                    id: id,
                 },
                 returning: true,
             });
@@ -83,6 +84,25 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
             return await User.count({
                 where: this.filterDomToDal(filter)
             });
+        } catch (error) {
+            throw new StorageError(error);
+        }
+    }
+
+    async updateByEmail(email: string, item: UserDOM) {
+        try {
+            const response = await User.update(this.fromDomToDal(item), {
+                where: {
+                    email: email,
+                },
+                returning: true,
+            });
+
+            const resDAL = response[1];
+
+            const resDOM =
+                resDAL !== null ? this.fromDalToDom(resDAL[0]) : null;
+            return resDOM;
         } catch (error) {
             throw new StorageError(error);
         }
