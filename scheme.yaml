@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.0
+  version: 1.0.1
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -183,6 +183,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/list_response"
+  
+  #QUESTIONS
+  /v1/questions/create-one:
+    post:
+      tags:
+        - question
+      summary: create a question
+      description: http://localhost:3000/v1/questions/create-one
+      operationId: question:create-one
+      security:
+        - BearerAuth: []
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/question-create-one"
+      responses:
+        "201":
+          description: question created correctly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
@@ -221,6 +256,7 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
+    #USERS
     user-create-one:
       title: user-create-one
       type: object
@@ -266,6 +302,18 @@ components:
         contraseña:
           type: string
           example: contraseña123
+  #QUESTIONS
+    question-create-one:
+      title: question-create-one
+      type: object
+      properties:
+        pregunta:
+          type: string
+          example: ¿Presenta pérdida de interés por realizar actividades?
+        sintomas:
+          type: array
+          items:
+            type: integer
   #RESPONSES
     api_response:
       title: ApiResponse

@@ -22,6 +22,9 @@
       ],
       "@users/*": [
         "domain/modules/user/*"
+      ],
+      "@questions/*": [
+        "domain/modules/question/*"
       ]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
   },

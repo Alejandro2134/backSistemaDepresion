@@ -3,6 +3,14 @@ export interface IQuestionDAL {
     pregunta: string;
 }
 
+interface IOperators {
+    [index: symbol]: any;
+}
+
+export interface IQuestionFDAL {
+    pregunta?: string | IOperators;
+}
+
 export class QuestionDAL implements IQuestionDAL {
     id?: number;
     pregunta: string;
