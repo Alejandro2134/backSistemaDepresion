@@ -129,6 +129,9 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
 
         for(const key in item) {
             switch(key) {
+                case 'id':
+                    mapFilter[key] = item[key];
+                    break;
                 case 'pregunta':
                     mapFilter[key] = {
                         [Op.iLike]: `${item[key]}%`

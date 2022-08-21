@@ -10,6 +10,9 @@ export default function filter(
     for (const key in query) {
         if (key !== 'limit' && key !== 'offset' && query[key] !== undefined) {
             switch (key) {
+                case 'id':
+                    mapFilter[key] = query[key];
+                    break;
                 case 'pregunta':
                     mapFilter[key] = query[key];
                     break;

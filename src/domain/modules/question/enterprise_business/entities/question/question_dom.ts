@@ -9,6 +9,7 @@ export interface IQuestionDOM {
 }
 
 export interface IQuestionFDOM {
+    id?: number;
     pregunta?: string;
 }
 

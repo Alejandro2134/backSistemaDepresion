@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.2
+  version: 1.0.3
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -226,6 +226,12 @@ paths:
       description: http://localhost:3000/v1/questions/get-all
       operationId: question:get-all
       parameters:
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: number
+            example: 1
         - in: query
           name: pregunta
           required: false

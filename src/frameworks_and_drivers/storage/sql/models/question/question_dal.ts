@@ -9,6 +9,7 @@ interface IOperators {
 
 export interface IQuestionFDAL {
     pregunta?: string | IOperators;
+    id?: number;
 }
 
 export class QuestionDAL implements IQuestionDAL {
