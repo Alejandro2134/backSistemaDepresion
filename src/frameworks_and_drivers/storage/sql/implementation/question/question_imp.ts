@@ -5,6 +5,7 @@ import { IFilterWrapper, IWrapper } from "../../client/interfaces/iwrapper";
 import { IQuestionFDAL, QuestionDAL } from "../../models/question/question_dal";
 import { Question } from '@fnd/storage/sql/models/question/Question';
 import { Op } from 'sequelize';
+import { Symptom } from "../../models/symptom/Symptom";
 
 export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, IQuestionFDOM> implements IWrapper<QuestionDOM, QuestionDAL>, IFilterWrapper<IQuestionFDOM, IQuestionFDAL> {
     async create(item: QuestionDOM): Promise<QuestionDOM> {
@@ -59,8 +60,15 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
     async getAll(filter: IQuestionFDOM): Promise<QuestionDOM[]> {
         try {
             const resDAL = await Question.findAll({
-                where: this.filterDomToDal(filter)   
+                where: this.filterDomToDal(filter),
+                include: [{
+                    model: Symptom,
+                    through: {
+                        attributes: []
+                    },
+                }]
             });
+
             const resDOM = resDAL.map(this.fromDalToDom);
             return resDOM;
         } catch (error) {
@@ -99,8 +107,17 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
     fromDalToDom(item: Question): QuestionDOM {
         const entity = new QuestionDOM({
             id: item.id,
-            pregunta: item.pregunta
+            pregunta: item.pregunta,
         });
+
+        if(item.symptoms) {
+            entity.symptoms = item.symptoms.map(symptom => {
+                return {
+                    id: symptom.id,
+                    sintoma: symptom.sintoma
+                }
+            })
+        }
 
         return entity;
     }

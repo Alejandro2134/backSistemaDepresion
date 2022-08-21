@@ -1,10 +1,14 @@
-import { DataTypes, HasManySetAssociationsMixin, Model } from "sequelize";
+import { DataTypes, HasManyAddAssociationsMixin, HasManySetAssociationsMixin, Model } from "sequelize";
 import { IQuestionDAL } from "./question_dal";
 import { sequelizeConnection } from '../../client/client';
 import { Symptom } from "../symptom/Symptom";
+import { ISymptomDAL } from "../symptom/symptom_dal";
 
 export class Question extends Model<IQuestionDAL> implements IQuestionDAL {
     declare setSymptoms: HasManySetAssociationsMixin<Symptom, number>;
+    declare addSymptoms: HasManyAddAssociationsMixin<Symptom, number>;
+    /** Not logic params */
+    declare symptoms: ISymptomDAL[];
 
     id!: number;
     pregunta!: string;
