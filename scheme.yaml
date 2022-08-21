@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.1
+  version: 1.0.2
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -206,6 +206,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+  /v1/questions/get-all:
+    get:
+      tags:
+        - question
+      summary: Get all questions
+      description: http://localhost:3000/v1/questions/get-all
+      operationId: question:get-all
+      parameters:
+        - in: query
+          name: pregunta
+          required: false
+          schema:
+            type: string
+            example: ¿Presenta pérdida de interés por realizar actividades?
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: get all questions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/list_response"
         "401":
           description: Access token doesn't have the required permission
           content:
