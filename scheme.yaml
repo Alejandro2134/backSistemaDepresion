@@ -259,6 +259,45 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+  /v1/questions/{id}/delete-one:
+    delete:
+      tags:
+        - question
+      summary: delete one question
+      description: http://localhost:3000/v1/questions/{id}/delete-one
+      operationId: question:delete-one
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the question to delete
+      responses:
+        "204":
+          description: satisfactory removal
+        "404":
+          description: Not found question with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
