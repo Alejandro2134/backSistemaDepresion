@@ -298,6 +298,54 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+  /v1/questions/{id}/update-one:
+    put:
+      tags:
+        - question
+      summary: update one question
+      description: http://localhost:3000/v1/questions/{id}/update-one
+      operationId: question:update-one
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/question-update-one"
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the user to update
+      responses:
+        "200":
+          description: question updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "404":
+          description: Not found question with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
@@ -394,6 +442,13 @@ components:
           type: array
           items:
             type: integer
+    question-update-one:
+      title: question-update-one
+      type: object
+      properties:
+        pregunta:
+          type: string
+          example: ¿Presenta pérdida de interés por realizar actividades?
   #RESPONSES
     api_response:
       title: ApiResponse

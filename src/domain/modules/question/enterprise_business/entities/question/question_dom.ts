@@ -26,4 +26,9 @@ export class QuestionDOM implements IQuestionDOM {
         this.sintomas = item.sintomas;
         this.symptoms = item.symptoms;
     }
+
+    updateQuestion(item: IQuestionDOM) {
+        this.pregunta = item?.pregunta;
+        return Object.freeze(this);
+    }
 }

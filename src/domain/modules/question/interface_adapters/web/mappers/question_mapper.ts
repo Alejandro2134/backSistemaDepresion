@@ -14,7 +14,7 @@ export class QuestionMapper implements IMapperAPI<QuestionDOM, QuestionAPI> {
         return dom;
     }
 
-    fromDomToApi(item: IQuestionDOM, opts?: any): QuestionAPI {
+    fromDomToApi(item: QuestionDOM, opts?: any): QuestionAPI {
         const api = new QuestionAPI({
             id: item.id,
             pregunta: item.pregunta

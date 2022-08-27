@@ -37,7 +37,7 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
 
             const result = response[1];
             const resDAL = result[0].get({ plain: true });
-            const resDOM = resDAL !== null ? this.fromDalToDom(resDAL[0]) : null;
+            const resDOM = resDAL !== null ? this.fromDalToDom(resDAL) : null;
             return resDOM;
         } catch (error) {
             throw new StorageError(error);
@@ -81,8 +81,14 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
     async getOne(id: number): Promise<QuestionDOM | null> {
         try {
             const result = await Question.findByPk(id);
-            const resDAL = result ? result.get({ plain: true }) : null;
-            return resDAL;
+
+            if(result) {
+                const resDAL = result.get({ plain: true });
+                const resDOM = this.fromDalToDom(resDAL);
+                return resDOM;
+            } else {
+                return null;
+            }
         } catch (error) {
             throw new StorageError(error);
         }
