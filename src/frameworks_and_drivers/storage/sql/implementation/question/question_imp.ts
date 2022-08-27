@@ -6,17 +6,19 @@ import { IQuestionFDAL, QuestionDAL } from "../../models/question/question_dal";
 import { Question } from '@fnd/storage/sql/models/question/Question';
 import { Op } from 'sequelize';
 import { Symptom } from "../../models/symptom/Symptom";
+import { fromSnakeToCamel } from "@fnd/helpers/from_snake_to_camel";
 
 export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, IQuestionFDOM> implements IWrapper<QuestionDOM, QuestionDAL>, IFilterWrapper<IQuestionFDOM, IQuestionFDAL> {
     async create(item: QuestionDOM): Promise<QuestionDOM> {
         try {
             const itemDAL = this.fromDomToDal(item);
-            const resDAL = await Question.create(itemDAL);
+            const result = await Question.create(itemDAL);
             
             if(item.sintomas) {
-                resDAL.setSymptoms(item.sintomas);
+                result.addSymptoms(item.sintomas);
             }
             
+            const resDAL = result.get({ plain: true });
             const resDOM = this.fromDalToDom(resDAL);
             return resDOM;
         } catch (error) {
@@ -33,10 +35,9 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
                 returning: true,
             });
 
-            const resDAL = response[1];
-
-            const resDOM =
-                resDAL !== null ? this.fromDalToDom(resDAL[0]) : null;
+            const result = response[1];
+            const resDAL = result[0].get({ plain: true });
+            const resDOM = resDAL !== null ? this.fromDalToDom(resDAL[0]) : null;
             return resDOM;
         } catch (error) {
             throw new StorageError(error);
@@ -59,16 +60,17 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
 
     async getAll(filter: IQuestionFDOM): Promise<QuestionDOM[]> {
         try {
-            const resDAL = await Question.findAll({
+            const result = await Question.findAll({
                 where: this.filterDomToDal(filter),
                 include: [{
                     model: Symptom,
                     through: {
                         attributes: []
-                    },
-                }]
+                    }
+                }],
             });
 
+            const resDAL = result.map(result => result.get({ plain: true }));
             const resDOM = resDAL.map(this.fromDalToDom);
             return resDOM;
         } catch (error) {
@@ -78,8 +80,9 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
 
     async getOne(id: number): Promise<QuestionDOM | null> {
         try {
-            const resDAL = await Question.findByPk(id);
-            return resDAL ? this.fromDalToDom(resDAL) : null;
+            const result = await Question.findByPk(id);
+            const resDAL = result ? result.get({ plain: true }) : null;
+            return resDAL;
         } catch (error) {
             throw new StorageError(error);
         }
@@ -98,25 +101,20 @@ export class QuestionsSQLImplementation extends BaseImplementation<QuestionDOM, 
     fromDomToDal(item: QuestionDOM): QuestionDAL {
         const entity = new QuestionDAL({
             id: item.id,
-            pregunta: item.pregunta
+            pregunta: item.pregunta,
         });
 
         return entity;
     }
 
-    fromDalToDom(item: Question): QuestionDOM {
+    fromDalToDom(item: QuestionDAL): QuestionDOM {
         const entity = new QuestionDOM({
             id: item.id,
             pregunta: item.pregunta,
         });
 
         if(item.symptoms) {
-            entity.symptoms = item.symptoms.map(symptom => {
-                return {
-                    id: symptom.id,
-                    sintoma: symptom.sintoma
-                }
-            })
+            entity.symptoms = item.symptoms.map(fromSnakeToCamel);
         }
 
         return entity;

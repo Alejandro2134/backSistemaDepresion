@@ -1,7 +1,7 @@
 import { ISymptomDOM } from "domain/modules/symptom/enterprise_business/entities/symptom_dom";
 
 export interface IQuestionDOM {
-    id: number;
+    id?: number;
     pregunta: string;
     sintomas?: number[];
     /**Not logic params */
@@ -14,15 +14,16 @@ export interface IQuestionFDOM {
 }
 
 export class QuestionDOM implements IQuestionDOM {
-    id: number;
+    id?: number;
     pregunta: string;
     sintomas?: number[];
     /**Not logic params */
-    symptoms!: ISymptomDOM[]; 
+    symptoms?: ISymptomDOM[]; 
 
     constructor(item: IQuestionDOM) {
         this.id = item.id;
         this.pregunta = item.pregunta;
         this.sintomas = item.sintomas;
+        this.symptoms = item.symptoms;
     }
 }
