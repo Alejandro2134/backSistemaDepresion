@@ -1,5 +1,5 @@
 export interface IUserAPI {
-    id: number;
+    id?: number;
     cedula: string;
     nombre: string;
     email: string;
@@ -8,7 +8,7 @@ export interface IUserAPI {
 }
 
 export class UserAPI implements IUserAPI {
-    id: number;
+    id?: number;
     cedula: string;
     nombre: string;
     email: string;

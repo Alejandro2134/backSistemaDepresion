@@ -17,7 +17,9 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
     async create(item: UserDOM): Promise<UserDOM> {
         try {
             const itemDAL = this.fromDomToDal(item);
-            const resDAL = await User.create(itemDAL);
+            const result = await User.create(itemDAL);
+            
+            const resDAL = result.get({ plain: true });
             const resDOM = this.fromDalToDom(resDAL);
             return resDOM;
         } catch (error) {
@@ -29,15 +31,14 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
         try {
             const response = await User.update(this.fromDomToDal(item), {
                 where: {
-                    id: id,
+                    id: id
                 },
                 returning: true,
             });
 
-            const resDAL = response[1];
-
-            const resDOM =
-                resDAL !== null ? this.fromDalToDom(resDAL[0]) : null;
+            const result = response[1];
+            const resDAL = result[0].get({ plain: true });
+            const resDOM = resDAL !== null ? this.fromDalToDom(resDAL) : null;
             return resDOM;
         } catch (error) {
             throw new StorageError(error);
@@ -60,9 +61,11 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
 
     async getAll(filter: IUserFDOM): Promise<UserDOM[]> {
         try {
-            const resDAL = await User.findAll({
-                where: this.filterDomToDal(filter)   
+            const result = await User.findAll({
+                where: this.filterDomToDal(filter),
             });
+
+            const resDAL = result.map(result => result.get({ plain: true }));
             const resDOM = resDAL.map(this.fromDalToDom);
             return resDOM;
         } catch (error) {
@@ -72,8 +75,15 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
 
     async getOne(id: number): Promise<UserDOM | null> {
         try {
-            const resDAL = await User.findByPk(id);
-            return resDAL ? this.fromDalToDom(resDAL) : null;
+            const result = await User.findByPk(id);
+
+            if(result) {
+                const resDAL = result.get({ plain: true });
+                const resDOM = this.fromDalToDom(resDAL);
+                return resDOM;
+            } else {
+                return null;
+            }
         } catch (error) {
             throw new StorageError(error);
         }
@@ -98,10 +108,9 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
                 returning: true,
             });
 
-            const resDAL = response[1];
-
-            const resDOM =
-                resDAL !== null ? this.fromDalToDom(resDAL[0]) : null;
+            const result = response[1];
+            const resDAL = result[0].get({ plain: true });
+            const resDOM = resDAL !== null ? this.fromDalToDom(resDAL) : null;
             return resDOM;
         } catch (error) {
             throw new StorageError(error);
@@ -121,7 +130,7 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
         return entity;
     }
 
-    fromDalToDom(item: User): UserDOM {
+    fromDalToDom(item: UserDAL): UserDOM {
         const entity = new UserDOM({
             id: item.id,
             cedula: item.cedula,

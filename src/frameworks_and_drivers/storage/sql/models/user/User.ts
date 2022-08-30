@@ -1,8 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelizeConnection } from '../../client/client';
-import { IUserDAL } from './user_dal';
+import { UserDAL } from './user_dal';
 
-export class User extends Model<IUserDAL> implements IUserDAL {
+export class User extends Model<UserDAL> implements UserDAL {
     id!: number;
     cedula!: string;
     nombre!: string;

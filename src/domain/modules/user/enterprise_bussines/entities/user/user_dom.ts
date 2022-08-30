@@ -1,5 +1,5 @@
 export interface IUserDOM {
-    id: number;
+    id?: number;
     cedula: string;
     nombre: string;
     email: string;
@@ -18,7 +18,7 @@ export interface IUserFDOM {
 }
 
 export class UserDOM implements IUserDOM {
-    id: number;
+    id?: number;
     cedula: string;
     nombre: string;
     email: string;
