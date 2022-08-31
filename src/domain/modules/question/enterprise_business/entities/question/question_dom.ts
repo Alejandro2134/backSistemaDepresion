@@ -1,4 +1,4 @@
-import { ISymptomDOM } from "domain/modules/symptom/enterprise_business/entities/symptom_dom";
+import { ISymptomDOM } from "@symptoms/enterprise_business/entities/symptom/symptom_dom";
 
 export interface IQuestionDOM {
     id?: number;

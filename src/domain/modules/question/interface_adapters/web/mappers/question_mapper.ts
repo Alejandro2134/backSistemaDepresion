@@ -1,7 +1,7 @@
 import { IMapperAPI } from "@common/interface_adapters/web/controllers/bases/imapperapi";
 import { fromCamelToSnake } from "@fnd/helpers/from_camel_to_snake";
 import { QuestionAPI } from "@questions/enterprise_business/dto/question_api";
-import { IQuestionDOM, QuestionDOM } from "@questions/enterprise_business/entities/question/question_dom";
+import { QuestionDOM } from "@questions/enterprise_business/entities/question/question_dom";
 
 export class QuestionMapper implements IMapperAPI<QuestionDOM, QuestionAPI> {
     fromApiToDom(item: QuestionAPI, opts?: any): QuestionDOM {
