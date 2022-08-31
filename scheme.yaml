@@ -15,6 +15,8 @@ tags:
     description: User routes
   - name: question
     description: Question routes
+  - name: symptom
+    description: Symptom routes
 paths:
   #USER
   /v1/users/create-one:
@@ -346,6 +348,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+
+  #SYMPTOM
+  /v1/symptoms/create-one:
+    post:
+      tags:
+        - symptom
+      summary: create a symptom
+      description: http://localhost:3000/v1/symptoms/create-one
+      operationId: symptom:create-one
+      security:
+        - BearerAuth: []
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/symptom-create-one"
+      responses:
+        "201":
+          description: symptom created correctly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
@@ -449,6 +486,14 @@ components:
         pregunta:
           type: string
           example: ¿Presenta pérdida de interés por realizar actividades?
+  #SYMPTOMS
+    symptom-create-one:
+      title: symptom-create-one
+      type: object
+      properties:
+        sintoma:
+          type: string
+          example: Insomnio o hipersomnia
   #RESPONSES
     api_response:
       title: ApiResponse

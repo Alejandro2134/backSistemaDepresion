@@ -25,6 +25,9 @@
       ],
       "@questions/*": [
         "domain/modules/question/*"
+      ],
+      "@symptoms/*": [
+        "domain/modules/symptom/*"
       ]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
   },
