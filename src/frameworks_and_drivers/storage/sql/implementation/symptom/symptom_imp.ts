@@ -117,6 +117,9 @@ export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, IS
 
         for(const key in item) {
             switch(key) {
+                case 'id':
+                    mapFilter[key] =  item[key];
+                    break;
                 case 'sintoma':
                     mapFilter[key] = {
                         [Op.iLike]: `${item[key]}%`

@@ -49,4 +49,25 @@ export class SymptomController {
             next(error);
         }
     }
+
+    async updateOne(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            const body = req.body;
+
+            const result = await service.updateOne(
+                +id,
+                mapper.fromApiToDom(body)
+            );
+
+            res.status(HTTPCodesEnum.SUCCESSFUL).json(
+                new ApiResponse(
+                    HTTPCodesEnum.SUCCESSFUL,
+                    mapper.fromDomToApi(result)
+                )
+            );
+        } catch (err) {
+            next(err);
+        }
+    }
 }

@@ -457,6 +457,54 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+  /v1/symptoms/{id}/update-one:
+    put:
+      tags:
+        - symptom
+      summary: update one symptom
+      description: http://localhost:3000/v1/symptoms/{id}/update-one
+      operationId: symptom:update-one
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/symptom-update-one"
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the symptom to update
+      responses:
+        "200":
+          description: symptom updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "404":
+          description: Not found symptom with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
@@ -563,6 +611,13 @@ components:
   #SYMPTOMS
     symptom-create-one:
       title: symptom-create-one
+      type: object
+      properties:
+        sintoma:
+          type: string
+          example: Insomnio o hipersomnia
+    symptom-update-one:
+      title: symptom-update-one
       type: object
       properties:
         sintoma:

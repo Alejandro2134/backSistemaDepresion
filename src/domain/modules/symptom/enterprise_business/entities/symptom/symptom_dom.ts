@@ -4,6 +4,7 @@ export interface ISymptomDOM {
 }
 
 export interface ISymptomFDOM {
+    id?: number;
     sintoma?: string;
 }
 
@@ -14,5 +15,10 @@ export class SymptomDOM implements ISymptomDOM {
     constructor(item: ISymptomDOM) {
         this.id = item.id;
         this.sintoma = item.sintoma;
+    }
+
+    updateSymptom(item: ISymptomDOM) {
+        this.sintoma = item?.sintoma;
+        return Object.freeze(this);
     }
 }
