@@ -418,6 +418,45 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+  /v1/symptoms/{id}/delete-one:
+    delete:
+      tags:
+        - symptom
+      summary: delete one symptom
+      description: http://localhost:3000/v1/symptoms/{id}/delete-one
+      operationId: symptom:delete-one
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the symptom to delete
+      responses:
+        "204":
+          description: satisfactory removal
+        "404":
+          description: Not found symptom with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
