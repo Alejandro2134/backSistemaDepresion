@@ -383,6 +383,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+  /v1/symptoms/get-all:
+    get:
+      tags:
+        - symptom
+      summary: Get all symptoms
+      description: http://localhost:3000/v1/symptoms/get-all
+      operationId: symptom:get-all
+      parameters:
+        - in: query
+          name: sintoma
+          required: false
+          schema:
+            type: string
+            example: Insomnio o hipersomnia
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: get all symptoms
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/list_response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
