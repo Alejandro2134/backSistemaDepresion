@@ -19,7 +19,6 @@ const build = ({ questionsRepo }: Dependencies) => {
         const question = await questionsRepo.getAll({ id: id });
         if (question[0]) {
             const updateQuestion = question[0].updateQuestion(item);
-
             const result = await questionsRepo.update(id, updateQuestion);
             if (!result)
                 throw new ErrorBadRequest(QUESTION_CANT_BE_UPDATED_ERROR);

@@ -37,7 +37,7 @@ export class QuestionDOM implements IQuestionDOM {
             item.removerSintomas
         );
         this.pregunta = item?.pregunta;
-        return this;
+        return Object.freeze(this);
     }
 }
 
