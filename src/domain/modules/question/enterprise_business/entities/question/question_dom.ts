@@ -1,11 +1,12 @@
-import { ISymptomDOM } from "@symptoms/enterprise_business/entities/symptom/symptom_dom";
+import { ISymptomDOM } from '@symptoms/enterprise_business/entities/symptom/symptom_dom';
 
 export interface IQuestionDOM {
     id?: number;
     pregunta: string;
-    sintomas?: number[];
+    sintomas: number[];
+    removerSintomas?: number[];
     /**Not logic params */
-    symptoms?: ISymptomDOM[]; 
+    symptoms?: ISymptomDOM[];
 }
 
 export interface IQuestionFDOM {
@@ -16,19 +17,50 @@ export interface IQuestionFDOM {
 export class QuestionDOM implements IQuestionDOM {
     id?: number;
     pregunta: string;
-    sintomas?: number[];
+    sintomas: number[];
+    removerSintomas?: number[];
     /**Not logic params */
-    symptoms?: ISymptomDOM[]; 
+    symptoms?: ISymptomDOM[];
 
     constructor(item: IQuestionDOM) {
         this.id = item.id;
         this.pregunta = item.pregunta;
         this.sintomas = item.sintomas;
-        this.symptoms = item.symptoms;
+        this.removerSintomas = item.removerSintomas;
     }
 
     updateQuestion(item: IQuestionDOM) {
+        this.removerSintomas = item?.removerSintomas;
+        this.sintomas = addSintomas(
+            this.sintomas,
+            item.sintomas,
+            item.removerSintomas
+        );
         this.pregunta = item?.pregunta;
-        return Object.freeze(this);
+        return this;
     }
 }
+
+const addSintomas = (
+    actualSintomas: number[],
+    newSintomas: number[],
+    removeSintomas: number[] | undefined
+): number[] => {
+    let finalSintomas: number[] = [];
+
+    if (removeSintomas) {
+        for (const sintoma of actualSintomas) {
+            if (!removeSintomas.includes(sintoma)) {
+                finalSintomas.push(sintoma);
+            }
+        }
+    } else {
+        finalSintomas = finalSintomas.concat(actualSintomas);
+    }
+
+    if (newSintomas) {
+        return finalSintomas.concat(newSintomas);
+    } else {
+        return finalSintomas;
+    }
+};

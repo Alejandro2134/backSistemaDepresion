@@ -1,14 +1,20 @@
-import { DataTypes, HasManyAddAssociationsMixin, HasManySetAssociationsMixin, Model } from "sequelize";
-import { QuestionDAL } from "./question_dal";
+import {
+    DataTypes,
+    HasManyAddAssociationsMixin,
+    HasManyRemoveAssociationsMixin,
+    Model,
+} from 'sequelize';
+import { QuestionDAL } from './question_dal';
 import { sequelizeConnection } from '../../client/client';
-import { Symptom } from "../symptom/Symptom";
+import { Symptom } from '../symptom/Symptom';
 
 export class Question extends Model<QuestionDAL> implements QuestionDAL {
-    declare setSymptoms: HasManySetAssociationsMixin<Symptom, number>;
     declare addSymptoms: HasManyAddAssociationsMixin<Symptom, number>;
+    declare removeSymptoms: HasManyRemoveAssociationsMixin<Symptom, number>;
 
     id!: number;
     pregunta!: string;
+    sintomas!: number[];
 }
 
 Question.init(
@@ -23,6 +29,10 @@ Question.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        sintomas: {
+            type: DataTypes.ARRAY(DataTypes.INTEGER),
+            allowNull: false,
+        },
     },
     {
         sequelize: sequelizeConnection,
@@ -30,4 +40,4 @@ Question.init(
         modelName: 'question',
         freezeTableName: true,
     }
-)
+);

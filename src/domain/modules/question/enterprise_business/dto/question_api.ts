@@ -1,17 +1,19 @@
-import { ISymptomAPI } from "domain/modules/symptom/enterprise_business/dto/symptom_api";
+import { ISymptomAPI } from 'domain/modules/symptom/enterprise_business/dto/symptom_api';
 
 export interface IQuestionAPI {
     id?: number;
     pregunta: string;
-    sintomas?: number[];
+    sintomas: number[];
+    remover_sintomas?: number[];
     /**Not logic params */
-    symptoms?: ISymptomAPI[]; 
+    symptoms?: ISymptomAPI[];
 }
 
 export class QuestionAPI implements IQuestionAPI {
     id?: number;
     pregunta: string;
-    sintomas?: number[];
+    sintomas: number[];
+    remover_sintomas?: number[];
     /**Not logic params */
     symptoms?: ISymptomAPI[];
 
@@ -19,6 +21,6 @@ export class QuestionAPI implements IQuestionAPI {
         this.id = item.id;
         this.pregunta = item.pregunta;
         this.sintomas = item.sintomas;
-        this.symptoms = item.symptoms;
+        this.remover_sintomas = item.remover_sintomas;
     }
 }

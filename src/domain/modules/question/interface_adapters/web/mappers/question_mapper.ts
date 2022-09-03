@@ -1,14 +1,15 @@
-import { IMapperAPI } from "@common/interface_adapters/web/controllers/bases/imapperapi";
-import { fromCamelToSnake } from "@fnd/helpers/from_camel_to_snake";
-import { QuestionAPI } from "@questions/enterprise_business/dto/question_api";
-import { QuestionDOM } from "@questions/enterprise_business/entities/question/question_dom";
+import { IMapperAPI } from '@common/interface_adapters/web/controllers/bases/imapperapi';
+import { fromCamelToSnake } from '@fnd/helpers/from_camel_to_snake';
+import { QuestionAPI } from '@questions/enterprise_business/dto/question_api';
+import { QuestionDOM } from '@questions/enterprise_business/entities/question/question_dom';
 
 export class QuestionMapper implements IMapperAPI<QuestionDOM, QuestionAPI> {
     fromApiToDom(item: QuestionAPI, opts?: any): QuestionDOM {
         const dom = new QuestionDOM({
             id: item.id,
             pregunta: item.pregunta,
-            sintomas: item.sintomas
+            sintomas: item.sintomas,
+            removerSintomas: item.remover_sintomas,
         });
 
         return dom;
@@ -17,10 +18,11 @@ export class QuestionMapper implements IMapperAPI<QuestionDOM, QuestionAPI> {
     fromDomToApi(item: QuestionDOM, opts?: any): QuestionAPI {
         const api = new QuestionAPI({
             id: item.id,
-            pregunta: item.pregunta
+            pregunta: item.pregunta,
+            sintomas: item.sintomas,
         });
 
-        if(item.symptoms) {
+        if (item.symptoms) {
             api.symptoms = item.symptoms.map(fromCamelToSnake);
         }
 
