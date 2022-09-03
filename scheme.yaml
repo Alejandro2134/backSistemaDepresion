@@ -28,7 +28,7 @@ paths:
       operationId: user:create-one
       security:
         - BearerAuth: []
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -98,7 +98,7 @@ paths:
       summary: update one user
       description: http://localhost:3000/v1/users/{email}/update-one
       operationId: user:update-one
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -142,7 +142,7 @@ paths:
         - in: query
           name: es_admin
           required: false
-          schema: 
+          schema:
             type: boolean
             example: false
       security:
@@ -173,7 +173,7 @@ paths:
       summary: login user
       description: http://localhost:3000/v1/users/login
       operationId: user:login
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -185,7 +185,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/list_response"
-  
+
   #QUESTIONS
   /v1/questions/create-one:
     post:
@@ -196,7 +196,7 @@ paths:
       operationId: question:create-one
       security:
         - BearerAuth: []
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -307,7 +307,7 @@ paths:
       summary: update one question
       description: http://localhost:3000/v1/questions/{id}/update-one
       operationId: question:update-one
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -359,7 +359,7 @@ paths:
       operationId: symptom:create-one
       security:
         - BearerAuth: []
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -464,7 +464,7 @@ paths:
       summary: update one symptom
       description: http://localhost:3000/v1/symptoms/{id}/update-one
       operationId: symptom:update-one
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -510,8 +510,8 @@ paths:
     get:
       tags:
         - common
-      summary: ''
-      description: ''
+      summary: ""
+      description: ""
       operationId: common:get
       responses:
         "200":
@@ -520,8 +520,8 @@ paths:
     get:
       tags:
         - common
-      summary: ''
-      description: ''
+      summary: ""
+      description: ""
       operationId: common:healthy
       responses:
         "200":
@@ -530,8 +530,8 @@ paths:
     get:
       tags:
         - common
-      summary: ''
-      description: ''
+      summary: ""
+      description: ""
       operationId: common:readiness
       responses:
         "200":
@@ -550,8 +550,8 @@ components:
       properties:
         cedula:
           type: string
-          example: '1233912554'
-        nombre: 
+          example: "1233912554"
+        nombre:
           type: string
           example: Alejandro
         email:
@@ -566,8 +566,8 @@ components:
       properties:
         cedula:
           type: string
-          example: '1233912554'
-        nombre: 
+          example: "1233912554"
+        nombre:
           type: string
           example: Alejandro
         email:
@@ -589,7 +589,7 @@ components:
         contraseña:
           type: string
           example: contraseña123
-  #QUESTIONS
+    #QUESTIONS
     question-create-one:
       title: question-create-one
       type: object
@@ -608,7 +608,15 @@ components:
         pregunta:
           type: string
           example: ¿Presenta pérdida de interés por realizar actividades?
-  #SYMPTOMS
+        sintomas:
+          type: array
+          items:
+            type: integer
+        remover_sintomas:
+          type: array
+          items:
+            type: integer
+    #SYMPTOMS
     symptom-create-one:
       title: symptom-create-one
       type: object
@@ -623,7 +631,7 @@ components:
         sintoma:
           type: string
           example: Insomnio o hipersomnia
-  #RESPONSES
+    #RESPONSES
     api_response:
       title: ApiResponse
       required:
@@ -690,4 +698,3 @@ components:
       $ref: "#/components/schemas/api_error"
     404_not_found:
       $ref: "#/components/schemas/api_error"
-
