@@ -1,17 +1,25 @@
-import { StorageError } from "@common/enterprise_business_rules/dto/errors/storage_error";
-import { ISymptomFDOM, SymptomDOM } from "@symptoms/enterprise_business/entities/symptom/symptom_dom";
-import { Op } from "sequelize";
-import { BaseImplementation } from "../../client/driver/base_sql_impl";
-import { IFilterWrapper, IWrapper } from "../../client/interfaces/iwrapper";
-import { Symptom } from "../../models/symptom/Symptom";
-import { ISymptomFDAL, SymptomDAL } from "../../models/symptom/symptom_dal";
+import { StorageError } from '@common/enterprise_business_rules/dto/errors/storage_error';
+import {
+    ISymptomFDOM,
+    SymptomDOM,
+} from '@symptoms/enterprise_business/entities/symptom/symptom_dom';
+import { Op } from 'sequelize';
+import { BaseImplementation } from '../../client/driver/base_sql_impl';
+import { IFilterWrapper, IWrapper } from '../../client/interfaces/iwrapper';
+import { Symptom } from '../../models/symptom/Symptom';
+import { ISymptomFDAL, SymptomDAL } from '../../models/symptom/symptom_dal';
 
-export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, ISymptomFDOM> implements IWrapper<SymptomDOM, SymptomDAL>, IFilterWrapper<ISymptomFDOM, ISymptomFDAL> {
+export class SymptomsSQLImplementation
+    extends BaseImplementation<SymptomDOM, ISymptomFDOM>
+    implements
+        IWrapper<SymptomDOM, SymptomDAL>,
+        IFilterWrapper<ISymptomFDOM, ISymptomFDAL>
+{
     async create(item: SymptomDOM): Promise<SymptomDOM> {
         try {
             const itemDAL = this.fromDomToDal(item);
             const result = await Symptom.create(itemDAL);
-            
+
             const resDAL = result.get({ plain: true });
             const resDOM = this.fromDalToDom(resDAL);
             return resDOM;
@@ -24,7 +32,7 @@ export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, IS
         try {
             const response = await Symptom.update(this.fromDomToDal(item), {
                 where: {
-                    id: id
+                    id: id,
                 },
                 returning: true,
             });
@@ -46,6 +54,8 @@ export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, IS
                 },
             });
 
+            //TODO: Eliminar id de sintomas relacionados en las preguntas
+
             return res;
         } catch (error) {
             throw new StorageError(error);
@@ -58,7 +68,7 @@ export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, IS
                 where: this.filterDomToDal(filter),
             });
 
-            const resDAL = result.map(result => result.get({ plain: true }));
+            const resDAL = result.map((result) => result.get({ plain: true }));
             const resDOM = resDAL.map(this.fromDalToDom);
             return resDOM;
         } catch (error) {
@@ -70,7 +80,7 @@ export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, IS
         try {
             const result = await Symptom.findByPk(id);
 
-            if(result) {
+            if (result) {
                 const resDAL = result.get({ plain: true });
                 const resDOM = this.fromDalToDom(resDAL);
                 return resDOM;
@@ -85,7 +95,7 @@ export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, IS
     async countRegisters(filter: ISymptomFDOM): Promise<number> {
         try {
             return await Symptom.count({
-                where: this.filterDomToDal(filter)
+                where: this.filterDomToDal(filter),
             });
         } catch (error) {
             throw new StorageError(error);
@@ -95,7 +105,7 @@ export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, IS
     fromDomToDal(item: SymptomDOM): SymptomDAL {
         const entity = new SymptomDAL({
             id: item.id,
-            sintoma: item.sintoma
+            sintoma: item.sintoma,
         });
 
         return entity;
@@ -104,26 +114,24 @@ export class SymptomsSQLImplementation extends BaseImplementation<SymptomDOM, IS
     fromDalToDom(item: SymptomDAL): SymptomDOM {
         const entity = new SymptomDOM({
             id: item.id,
-            sintoma: item.sintoma
+            sintoma: item.sintoma,
         });
 
         return entity;
     }
 
     filterDomToDal(item: ISymptomFDOM): ISymptomFDAL {
-        const mapFilter: ISymptomFDAL = {
+        const mapFilter: ISymptomFDAL = {};
 
-        }
-
-        for(const key in item) {
-            switch(key) {
+        for (const key in item) {
+            switch (key) {
                 case 'id':
-                    mapFilter[key] =  item[key];
+                    mapFilter[key] = item[key];
                     break;
                 case 'sintoma':
                     mapFilter[key] = {
-                        [Op.iLike]: `${item[key]}%`
-                    }
+                        [Op.iLike]: `${item[key]}%`,
+                    };
                     break;
             }
         }

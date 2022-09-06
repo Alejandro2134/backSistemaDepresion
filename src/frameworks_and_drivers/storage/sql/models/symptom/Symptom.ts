@@ -1,10 +1,12 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelizeConnection } from "../../client/client";
-import { ISymptomDAL } from "./symptom_dal";
+import { DataTypes, Model } from 'sequelize';
+import { sequelizeConnection } from '../../client/client';
+import { Question } from '../question/Question';
+import { SymptomDAL } from './symptom_dal';
 
-export class Symptom extends Model<ISymptomDAL> implements ISymptomDAL {
+export class Symptom extends Model<SymptomDAL> implements SymptomDAL {
     id!: number;
     sintoma!: string;
+    question_id!: number | null;
 }
 
 Symptom.init(
@@ -17,7 +19,18 @@ Symptom.init(
         },
         sintoma: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+        },
+        question_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: Question,
+                key: 'id',
+            },
+            allowNull: true,
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+            defaultValue: null,
         },
     },
     {
