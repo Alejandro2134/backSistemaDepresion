@@ -22,7 +22,7 @@ const createDBConnection = async () => {
 
 const dbInit = async () => {
     const { dbInit } = await import('@fnd/storage/sql/client/init');
-    dbInit();
+    await dbInit();
 };
 
 const startWebApp = async () => {
