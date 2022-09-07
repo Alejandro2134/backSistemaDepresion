@@ -19,6 +19,7 @@ export class DepresionTypeDAL implements IDepresionTypeDAL {
     symptom_id?: number;
 
     constructor(item: IDepresionTypeDAL) {
+        this.id = item.id;
         this.tipo_depresion = item.tipo_depresion;
     }
 }

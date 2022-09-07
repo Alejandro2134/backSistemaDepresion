@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.5
+  version: 1.0.6
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -565,6 +565,45 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/list_response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+  /v1/depresion-type/{id}/delete-one:
+    delete:
+      tags:
+        - depresion-type
+      summary: delete one depresion-type
+      description: http://localhost:3000/v1/depresion-type/{id}/delete-one
+      operationId: depresion-type:delete-one
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the depresion-type to delete
+      responses:
+        "204":
+          description: satisfactory removal
+        "404":
+          description: Not found depresion-type with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
         "401":
           description: Access token doesn't have the required permission
           content:

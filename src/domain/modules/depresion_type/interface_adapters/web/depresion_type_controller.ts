@@ -38,4 +38,15 @@ export class DepresionTypeController {
             next(err);
         }
     }
+
+    async deleteOne(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            await service.deleteOne(+id);
+
+            res.sendStatus(HTTPCodesEnum.NOT_CONTENT);
+        } catch (error) {
+            next(error);
+        }
+    }
 }

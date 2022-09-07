@@ -8,6 +8,7 @@ export class DepresionTypeAPI implements IDepresionTypeAPI {
     tipo_depresion: string;
 
     constructor(item: IDepresionTypeAPI) {
+        this.id = item.id;
         this.tipo_depresion = item.tipo_depresion;
     }
 }

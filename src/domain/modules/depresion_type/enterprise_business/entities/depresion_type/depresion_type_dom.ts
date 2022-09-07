@@ -12,6 +12,7 @@ export class DepresionTypeDOM implements IDepresionTypeDOM {
     tipoDepresion: string;
 
     constructor(item: IDepresionTypeDOM) {
+        this.id = item.id;
         this.tipoDepresion = item.tipoDepresion;
     }
 }
