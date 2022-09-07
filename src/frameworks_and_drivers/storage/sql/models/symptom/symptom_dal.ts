@@ -1,7 +1,6 @@
 export interface ISymptomDAL {
     id?: number;
     sintoma: string;
-    question_id?: number | null;
 }
 
 interface IOperators {
@@ -15,7 +14,6 @@ export interface ISymptomFDAL {
 export class SymptomDAL implements ISymptomDAL {
     id?: number;
     sintoma: string;
-    question_id?: number | null;
 
     constructor(item: ISymptomDAL) {
         this.id = item.id;

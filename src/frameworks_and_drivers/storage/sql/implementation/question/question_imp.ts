@@ -82,7 +82,9 @@ export class QuestionsSQLImplementation
                 include: [
                     {
                         model: Symptom,
-                        as: 'symptoms',
+                        through: {
+                            attributes: [],
+                        },
                     },
                 ],
             });

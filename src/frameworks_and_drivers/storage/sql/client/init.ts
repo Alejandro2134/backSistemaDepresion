@@ -4,6 +4,8 @@ import { DepresionType } from '../models/depresion_type/DepresionType';
 import { Diagnosis } from '../models/diagnosis/Diagnosis';
 import { Question } from '../models/question/Question';
 import { Symptom } from '../models/symptom/Symptom';
+import { SymptomQuestion } from '../models/symptom_question/SymptomQuestion';
+import { sequelizeConnection } from './client';
 
 const dbInit = async () => {
     await User.sync({ force: false });
@@ -23,16 +25,11 @@ const dbInit = async () => {
 };
 
 const createAssociations = () => {
-    Question.hasMany(Symptom, {
-        as: 'symptoms',
-        foreignKey: 'question_id',
-    });
-    Symptom.belongsTo(Question);
-    Symptom.hasMany(DepresionType, {
-        as: 'depresion_types',
-        foreignKey: 'symptom_id',
-    });
-    DepresionType.belongsTo(Symptom);
+    Question.belongsToMany(Symptom, { through: SymptomQuestion });
+    Symptom.belongsToMany(Question, { through: SymptomQuestion });
+    //Symptom.belongsToMany(DepresionType, { through: 'depresion_type_symptom' });
+    //DepresionType.belongsToMany(Symptom, { through: 'depresion_type_symptom' });
+    sequelizeConnection.sync();
 };
 
 export { dbInit };

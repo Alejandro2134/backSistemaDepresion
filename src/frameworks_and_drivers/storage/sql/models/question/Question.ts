@@ -1,7 +1,7 @@
 import {
     DataTypes,
-    HasManyAddAssociationsMixin,
-    HasManyRemoveAssociationsMixin,
+    BelongsToManyAddAssociationsMixin,
+    BelongsToManyRemoveAssociationsMixin,
     Model,
 } from 'sequelize';
 import { QuestionDAL } from './question_dal';
@@ -9,8 +9,11 @@ import { sequelizeConnection } from '../../client/client';
 import { Symptom } from '../symptom/Symptom';
 
 export class Question extends Model<QuestionDAL> implements QuestionDAL {
-    declare addSymptoms: HasManyAddAssociationsMixin<Symptom, number>;
-    declare removeSymptoms: HasManyRemoveAssociationsMixin<Symptom, number>;
+    declare addSymptoms: BelongsToManyAddAssociationsMixin<Symptom, number>;
+    declare removeSymptoms: BelongsToManyRemoveAssociationsMixin<
+        Symptom,
+        number
+    >;
 
     id!: number;
     pregunta!: string;

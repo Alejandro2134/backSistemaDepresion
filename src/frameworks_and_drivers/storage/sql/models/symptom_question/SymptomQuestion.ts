@@ -1,13 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelizeConnection } from '../../client/client';
-import { SymptomDAL } from './symptom_dal';
+import { ISymptomQuestionDAL } from './symptom_question_dal';
 
-export class Symptom extends Model<SymptomDAL> implements SymptomDAL {
-    id!: number;
-    sintoma!: string;
+export class SymptomQuestion
+    extends Model<ISymptomQuestionDAL>
+    implements ISymptomQuestionDAL
+{
+    id!: string;
 }
 
-Symptom.init(
+SymptomQuestion.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -15,15 +17,11 @@ Symptom.init(
             primaryKey: true,
             allowNull: false,
         },
-        sintoma: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
     },
     {
         sequelize: sequelizeConnection,
         underscored: true,
-        modelName: 'symptom',
+        modelName: 'symptom_question',
         freezeTableName: true,
     }
 );
