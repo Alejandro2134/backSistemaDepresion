@@ -28,6 +28,11 @@ const createAssociations = () => {
         foreignKey: 'question_id',
     });
     Symptom.belongsTo(Question);
+    Symptom.hasMany(DepresionType, {
+        as: 'depresion_types',
+        foreignKey: 'symptom_id',
+    });
+    DepresionType.belongsTo(Symptom);
 };
 
 export { dbInit };

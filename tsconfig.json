@@ -28,6 +28,9 @@
       ],
       "@symptoms/*": [
         "domain/modules/symptom/*"
+      ],
+      "@depresion_type/*": [
+        "domain/modules/depresion_type/*"
       ]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
   },

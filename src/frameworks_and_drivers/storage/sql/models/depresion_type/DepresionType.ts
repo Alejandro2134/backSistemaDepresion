@@ -1,10 +1,15 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelizeConnection } from "../../client/client";
-import { IDepresionTypeDAL } from "./depresion_type_dal";
+import { DataTypes, Model } from 'sequelize';
+import { sequelizeConnection } from '../../client/client';
+import { Symptom } from '../symptom/Symptom';
+import { DepresionTypeDAL } from './depresion_type_dal';
 
-export class DepresionType extends Model<IDepresionTypeDAL> implements IDepresionTypeDAL {
+export class DepresionType
+    extends Model<DepresionTypeDAL>
+    implements DepresionTypeDAL
+{
     id!: number;
-    depresion_type!: string;
+    tipo_depresion!: string;
+    symptom_id!: number;
 }
 
 DepresionType.init(
@@ -15,10 +20,21 @@ DepresionType.init(
             primaryKey: true,
             allowNull: false,
         },
-        depresion_type: {
+        tipo_depresion: {
             type: DataTypes.STRING,
-            allowNull: false
-        }
+            allowNull: false,
+        },
+        symptom_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: Symptom,
+                key: 'id',
+            },
+            allowNull: true,
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+            defaultValue: null,
+        },
     },
     {
         sequelize: sequelizeConnection,
@@ -26,4 +42,4 @@ DepresionType.init(
         modelName: 'depresion_type',
         freezeTableName: true,
     }
-)
+);

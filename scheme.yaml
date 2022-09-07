@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.3
+  version: 1.0.4
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -17,6 +17,8 @@ tags:
     description: Question routes
   - name: symptom
     description: Symptom routes
+  - name: depresion-type
+    description: Depresion Type routes
 paths:
   #USER
   /v1/users/create-one:
@@ -505,6 +507,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+
+  #DEPRESION TYPE
+  /v1/depresion-type/create-one:
+    post:
+      tags:
+        - depresion-type
+      summary: create a depresion type
+      description: http://localhost:3000/v1/depresion-type/create-one
+      operationId: depresion-type:create-one
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/depresion-type-create-one"
+      responses:
+        "201":
+          description: depresion type created correctly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
@@ -631,6 +668,14 @@ components:
         sintoma:
           type: string
           example: Insomnio o hipersomnia
+    #DEPRESION TYPE
+    depresion-type-create-one:
+      title: depresion-type-create-one
+      type: object
+      properties:
+        tipo_depresion:
+          type: string
+          example: Trastorno de depresión mayor
     #RESPONSES
     api_response:
       title: ApiResponse
