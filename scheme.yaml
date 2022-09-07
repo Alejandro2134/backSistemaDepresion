@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.6
+  version: 1.0.7
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -616,6 +616,54 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+  /v1/depresion-type/{id}/update-one:
+    put:
+      tags:
+        - depresion-type
+      summary: update one depresion-type
+      description: http://localhost:3000/v1/depresion-type/{id}/update-one
+      operationId: depresion-type:update-one
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/depresion-type-update-one"
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the depresion-type to update
+      responses:
+        "200":
+          description: depresion-type updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "404":
+          description: Not found depresion-type with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
@@ -745,6 +793,13 @@ components:
     #DEPRESION TYPE
     depresion-type-create-one:
       title: depresion-type-create-one
+      type: object
+      properties:
+        tipo_depresion:
+          type: string
+          example: Trastorno de depresión mayor
+    depresion-type-update-one:
+      title: depresion-type-update-one
       type: object
       properties:
         tipo_depresion:
