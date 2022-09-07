@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.4
+  version: 1.0.5
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -530,6 +530,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+  /v1/depresion-type/get-all:
+    get:
+      tags:
+        - depresion-type
+      summary: Get all depresion types
+      description: http://localhost:3000/v1/depresion-type/get-all
+      operationId: depresion-type:get-all
+      parameters:
+        - in: query
+          name: tipo_depresion
+          required: false
+          schema:
+            type: string
+            example: Trastorno de depresión mayor
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: get all depresion types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/list_response"
         "401":
           description: Access token doesn't have the required permission
           content:

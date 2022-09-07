@@ -10,7 +10,7 @@ import { IFilterWrapper, IWrapper } from '../../client/interfaces/iwrapper';
 import { DepresionType } from '@fnd/storage/sql/models/depresion_type/DepresionType';
 import { StorageError } from '@common/enterprise_business_rules/dto/errors/storage_error';
 import { BaseImplementation } from '../../client/driver/base_sql_impl';
-import { fromCamelToSnake } from '@fnd/helpers/from_camel_to_snake';
+import { camelToSnake } from '@fnd/helpers/from_camel_to_snake';
 import { Op } from 'sequelize';
 
 export class DepresionTypesSQLImplementation
@@ -133,8 +133,8 @@ export class DepresionTypesSQLImplementation
 
         for (const key in item) {
             switch (key) {
-                case 'depresionType':
-                    mapFilter[fromCamelToSnake(key)] = {
+                case 'tipoDepresion':
+                    mapFilter[camelToSnake(key)] = {
                         [Op.iLike]: `${item[key]}%`,
                     };
                     break;
