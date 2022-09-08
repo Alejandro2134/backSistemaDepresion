@@ -1,4 +1,4 @@
-interface IDepresionTypeAPI {
+export interface IDepresionTypeAPI {
     id?: number;
     tipo_depresion: string;
 }

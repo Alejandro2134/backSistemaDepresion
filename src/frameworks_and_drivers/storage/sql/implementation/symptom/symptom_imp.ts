@@ -1,4 +1,5 @@
 import { StorageError } from '@common/enterprise_business_rules/dto/errors/storage_error';
+import { fromSnakeToCamel } from '@fnd/helpers/from_snake_to_camel';
 import {
     ISymptomFDOM,
     SymptomDOM,
@@ -6,6 +7,7 @@ import {
 import { Op } from 'sequelize';
 import { BaseImplementation } from '../../client/driver/base_sql_impl';
 import { IFilterWrapper, IWrapper } from '../../client/interfaces/iwrapper';
+import { DepresionType } from '../../models/depresion_type/DepresionType';
 import { Symptom } from '../../models/symptom/Symptom';
 import { ISymptomFDAL, SymptomDAL } from '../../models/symptom/symptom_dal';
 
@@ -19,6 +21,12 @@ export class SymptomsSQLImplementation
         try {
             const itemDAL = this.fromDomToDal(item);
             const result = await Symptom.create(itemDAL);
+
+            console.log(item.tiposDepresion);
+            console.log(result);
+            if (item.tiposDepresion) {
+                await result.addDepresion_types(item.tiposDepresion);
+            }
 
             const resDAL = result.get({ plain: true });
             const resDOM = this.fromDalToDom(resDAL);
@@ -38,6 +46,17 @@ export class SymptomsSQLImplementation
             });
 
             const result = response[1];
+
+            if (item.tiposDepresion) {
+                await result[0].addDepresion_types(item.tiposDepresion);
+            }
+
+            if (item.removerTiposDepresion) {
+                await result[0].removeDepresion_types(
+                    item.removerTiposDepresion
+                );
+            }
+
             const resDAL = result[0].get({ plain: true });
             const resDOM = resDAL !== null ? this.fromDalToDom(resDAL) : null;
             return resDOM;
@@ -66,6 +85,14 @@ export class SymptomsSQLImplementation
         try {
             const result = await Symptom.findAll({
                 where: this.filterDomToDal(filter),
+                include: [
+                    {
+                        model: DepresionType,
+                        through: {
+                            attributes: [],
+                        },
+                    },
+                ],
             });
 
             const resDAL = result.map((result) => result.get({ plain: true }));
@@ -106,6 +133,7 @@ export class SymptomsSQLImplementation
         const entity = new SymptomDAL({
             id: item.id,
             sintoma: item.sintoma,
+            tipos_depresion: item.tiposDepresion,
         });
 
         return entity;
@@ -115,7 +143,12 @@ export class SymptomsSQLImplementation
         const entity = new SymptomDOM({
             id: item.id,
             sintoma: item.sintoma,
+            tiposDepresion: item.tipos_depresion,
         });
+
+        if (item.depresion_types) {
+            entity.depresionTypes = item.depresion_types.map(fromSnakeToCamel);
+        }
 
         return entity;
     }

@@ -1,7 +1,6 @@
 export interface IDepresionTypeDAL {
     id?: number;
     tipo_depresion: string;
-    symptom_id?: number;
 }
 
 interface IOperators {
@@ -16,7 +15,6 @@ export interface IDepresionTypeFDAL {
 export class DepresionTypeDAL implements IDepresionTypeDAL {
     id?: number;
     tipo_depresion: string;
-    symptom_id?: number;
 
     constructor(item: IDepresionTypeDAL) {
         this.id = item.id;

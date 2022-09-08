@@ -783,6 +783,10 @@ components:
         sintoma:
           type: string
           example: Insomnio o hipersomnia
+        tipos_depresion:
+          type: array
+          items:
+            type: integer
     symptom-update-one:
       title: symptom-update-one
       type: object
@@ -790,6 +794,14 @@ components:
         sintoma:
           type: string
           example: Insomnio o hipersomnia
+        tipos_depresion:
+          type: array
+          items:
+            type: integer
+        remover_tipos_depresion:
+          type: array
+          items:
+            type: integer
     #DEPRESION TYPE
     depresion-type-create-one:
       title: depresion-type-create-one
