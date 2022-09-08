@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.7
+  version: 1.0.8
 servers:
   - url: http://localhost:3000
     description: "Local server"
