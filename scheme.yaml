@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.1.0
+  version: 1.2.0
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -730,6 +730,45 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/list_response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+  /v1/dictionary/{id}/delete-one:
+    delete:
+      tags:
+        - dictionary
+      summary: delete one dictionary
+      description: http://localhost:3000/v1/dictionary/{id}/delete-one
+      operationId: dictionary:delete-one
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the dictionary to delete
+      responses:
+        "204":
+          description: satisfactory removal
+        "404":
+          description: Not found dictionary with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
         "401":
           description: Access token doesn't have the required permission
           content:
