@@ -22,8 +22,6 @@ export class SymptomsSQLImplementation
             const itemDAL = this.fromDomToDal(item);
             const result = await Symptom.create(itemDAL);
 
-            console.log(item.tiposDepresion);
-            console.log(result);
             if (item.tiposDepresion) {
                 await result.addDepresion_types(item.tiposDepresion);
             }

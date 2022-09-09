@@ -133,6 +133,9 @@ export class DepresionTypesSQLImplementation
 
         for (const key in item) {
             switch (key) {
+                case 'id':
+                    mapFilter[key] = item[key];
+                    break;
                 case 'tipoDepresion':
                     mapFilter[camelToSnake(key)] = {
                         [Op.iLike]: `${item[key]}%`,
