@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.9
+  version: 1.1.0
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -689,6 +689,47 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+  /v1/dictionary/get-all:
+    get:
+      tags:
+        - dictionary
+      summary: Get all dictionary
+      description: http://localhost:3000/v1/dictionary/get-all
+      operationId: dictionary:get-all
+      parameters:
+        - in: query
+          name: termino
+          required: false
+          schema:
+            type: string
+            example: Depresión
+        - in: query
+          name: descripcion
+          required: false
+          schema:
+            type: string
+            example: Transtorno
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: get all dictionary types
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/list_response"
         "401":
           description: Access token doesn't have the required permission
           content:
