@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.2.0
+  version: 1.3.0
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -781,6 +781,54 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+  /v1/dictionary/{id}/update-one:
+    put:
+      tags:
+        - dictionary
+      summary: update one dictionary
+      description: http://localhost:3000/v1/dictionary/{id}/update-one
+      operationId: dictionary:update-one
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/dictionary-update-one"
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the dictionary to update
+      responses:
+        "200":
+          description: dictionary updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "404":
+          description: Not found dictionary with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
@@ -937,6 +985,16 @@ components:
     #DICTIONARY
     dictionary-create-one:
       title: dictionary-create-one
+      type: object
+      properties:
+        termino:
+          type: string
+          example: Depresión
+        descripcion:
+          type: string
+          example: Transtorno
+    dictionary-update-one:
+      title: dictionary-update-one
       type: object
       properties:
         termino:

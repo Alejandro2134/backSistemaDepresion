@@ -24,5 +24,6 @@ export class DictionaryDOM implements IDictionaryDOM {
     updateDictionary(item: IDictionaryDOM) {
         this.descripcion = item?.descripcion;
         this.termino = item?.termino;
+        return Object.freeze(this);
     }
 }
