@@ -17,9 +17,11 @@ const DEPRESION_TYPE_CANT_BE_UPDATED_ERROR = 'depresion type cant be updated';
 const build = ({ depresionTypesRepo }: Dependencies) => {
     const execute = async (id: number, item: IDepresionTypeDOM) => {
         const depresionType = await depresionTypesRepo.getAll({ id: id });
+        console.log(depresionType);
         if (depresionType[0]) {
             const updateDepresionType =
                 depresionType[0].updateDepresionType(item);
+            console.log(updateDepresionType);
             const result = await depresionTypesRepo.update(
                 id,
                 updateDepresionType
