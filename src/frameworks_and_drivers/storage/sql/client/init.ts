@@ -7,6 +7,7 @@ import { Symptom } from '../models/symptom/Symptom';
 import { SymptomQuestion } from '../models/symptom_question/SymptomQuestion';
 import { sequelizeConnection } from './client';
 import { DepresionTypeSymptom } from '../models/depresion_type_symptom/DepresionTypeSymptom';
+import { Dictionary } from '../models/dictionary/Dictionary';
 
 const dbInit = async () => {
     await User.sync({ force: false });
@@ -20,6 +21,9 @@ const dbInit = async () => {
         force: process.env.ENV == 'development' ? true : false,
     });
     await Diagnosis.sync({
+        force: process.env.ENV == 'development' ? true : false,
+    });
+    await Dictionary.sync({
         force: process.env.ENV == 'development' ? true : false,
     });
     await createAssociations();

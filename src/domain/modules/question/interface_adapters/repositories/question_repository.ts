@@ -1,7 +1,15 @@
-import { IOperations, IOptions } from "@fnd/storage/sql/client/interfaces/ioperations";
-import { IQuestionFDOM, QuestionDOM } from "../../enterprise_business/entities/question/question_dom";
+import {
+    IOperations,
+    IOptions,
+} from '@fnd/storage/sql/client/interfaces/ioperations';
+import {
+    IQuestionFDOM,
+    QuestionDOM,
+} from '../../enterprise_business/entities/question/question_dom';
 
-export class QuestionsRepository implements IOperations<QuestionDOM, IQuestionFDOM> {
+export class QuestionsRepository
+    implements IOperations<QuestionDOM, IQuestionFDOM>
+{
     private implementation: IOperations<QuestionDOM, IQuestionFDOM>;
 
     constructor(implementation: IOperations<QuestionDOM, IQuestionFDOM>) {
@@ -17,7 +25,10 @@ export class QuestionsRepository implements IOperations<QuestionDOM, IQuestionFD
     async delete(id: number): Promise<number> {
         return await this.implementation.delete(id);
     }
-    async getAll(filter: IQuestionFDOM, options?: IOptions): Promise<QuestionDOM[]> {
+    async getAll(
+        filter: IQuestionFDOM,
+        options?: IOptions
+    ): Promise<QuestionDOM[]> {
         return await this.implementation.getAll(filter, options);
     }
     async getOne(id: number): Promise<QuestionDOM | null> {

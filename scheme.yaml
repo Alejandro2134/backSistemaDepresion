@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.0.8
+  version: 1.0.9
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -19,6 +19,8 @@ tags:
     description: Symptom routes
   - name: depresion-type
     description: Depresion Type routes
+  - name: dictionary
+    description: Dictionary routes
 paths:
   #USER
   /v1/users/create-one:
@@ -664,6 +666,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+
+  #DICTIONARY
+  /v1/dictionary/create-one:
+    post:
+      tags:
+        - dictionary
+      summary: create a dictionary
+      description: http://localhost:3000/v1/dictionary/create-one
+      operationId: dictionary:create-one
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/dictionary-create-one"
+      responses:
+        "201":
+          description: dictionary created correctly
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:
@@ -817,6 +854,17 @@ components:
         tipo_depresion:
           type: string
           example: Trastorno de depresión mayor
+    #DICTIONARY
+    dictionary-create-one:
+      title: dictionary-create-one
+      type: object
+      properties:
+        termino:
+          type: string
+          example: Depresión
+        descripcion:
+          type: string
+          example: Transtorno
     #RESPONSES
     api_response:
       title: ApiResponse

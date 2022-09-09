@@ -31,6 +31,9 @@
       ],
       "@depresion_type/*": [
         "domain/modules/depresion_type/*"
+      ],
+      "@dictionary/*": [
+        "domain/modules/dictionary/*"
       ]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
   },
