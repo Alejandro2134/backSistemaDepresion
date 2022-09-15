@@ -975,6 +975,9 @@ components:
         tipo_depresion:
           type: string
           example: Trastorno de depresión mayor
+        cantidad_sintomas:
+          type: number
+          example: 4
     depresion-type-update-one:
       title: depresion-type-update-one
       type: object
@@ -982,6 +985,9 @@ components:
         tipo_depresion:
           type: string
           example: Trastorno de depresión mayor
+        cantidad_sintomas:
+          type: number
+          example: 4
     #DICTIONARY
     dictionary-create-one:
       title: dictionary-create-one

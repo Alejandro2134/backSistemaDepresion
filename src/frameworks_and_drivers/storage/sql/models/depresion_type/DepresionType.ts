@@ -8,6 +8,7 @@ export class DepresionType
 {
     id!: number;
     tipo_depresion!: string;
+    cantidad_sintomas!: number;
 }
 
 DepresionType.init(
@@ -22,6 +23,10 @@ DepresionType.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        cantidad_sintomas: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
     },
     {
         sequelize: sequelizeConnection,

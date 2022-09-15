@@ -114,6 +114,7 @@ export class DepresionTypesSQLImplementation
         const entity = new DepresionTypeDAL({
             id: item.id,
             tipo_depresion: item.tipoDepresion,
+            cantidad_sintomas: item.cantidadSintomas
         });
 
         return entity;
@@ -123,6 +124,7 @@ export class DepresionTypesSQLImplementation
         const entity = new DepresionTypeDOM({
             id: item.id,
             tipoDepresion: item.tipo_depresion,
+            cantidadSintomas: item.cantidad_sintomas
         });
 
         return entity;
