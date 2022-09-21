@@ -13,6 +13,7 @@ export interface IAuthDOM {
 }
 
 export interface IUserFDOM {
+    emailLogin?: string;
     email?: string;
     esAdmin?: boolean;
 }

@@ -17,7 +17,7 @@ const USER_DONT_HAVE_PASSWORD_ERROR = 'The user dont have a password';
 const build = ({ usersRepo }: Dependencies) => {
     const execute = async(auth: IAuthDOM) => {
         const { email, contraseña } = auth;
-        const user = await usersRepo.getAll({ email: email });
+        const user = await usersRepo.getAll({ emailLogin: email });
         
         if(user[0]) {
             if(user[0].contraseña) {

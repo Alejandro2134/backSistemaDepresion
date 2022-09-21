@@ -150,6 +150,9 @@ export class UsersSQLImplementation extends BaseImplementation<UserDOM, IUserFDO
 
         for(const key in item) {
             switch(key) {
+                case 'emailLogin': 
+                    mapFilter['email'] = item[key];
+                    break;
                 case 'email':
                     mapFilter[key] = {
                         [Op.iLike]: `${item[key]}%`

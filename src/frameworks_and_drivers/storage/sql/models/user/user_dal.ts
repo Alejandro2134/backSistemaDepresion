@@ -12,6 +12,7 @@ interface IOperators {
 }
 
 export interface IUserFDAL {
+    email_login?: string;
     email?: string | IOperators;
     es_admin?: boolean;
 }
