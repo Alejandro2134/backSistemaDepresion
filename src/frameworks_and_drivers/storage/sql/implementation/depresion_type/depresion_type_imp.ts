@@ -12,6 +12,8 @@ import { StorageError } from '@common/enterprise_business_rules/dto/errors/stora
 import { BaseImplementation } from '../../client/driver/base_sql_impl';
 import { camelToSnake } from '@fnd/helpers/from_camel_to_snake';
 import { Op } from 'sequelize';
+import { Symptom } from '../../models/symptom/Symptom';
+import { fromSnakeToCamel } from '@fnd/helpers/from_snake_to_camel';
 
 export class DepresionTypesSQLImplementation
     extends BaseImplementation<DepresionTypeDOM, IDepresionTypeFDOM>
@@ -74,6 +76,14 @@ export class DepresionTypesSQLImplementation
         try {
             const result = await DepresionType.findAll({
                 where: this.filterDomToDal(filter),
+                include: [
+                    {
+                        model: Symptom,
+                        through: {
+                            attributes: [],
+                        },
+                    },
+                ],
             });
 
             const resDAL = result.map((result) => result.get({ plain: true }));
@@ -114,7 +124,7 @@ export class DepresionTypesSQLImplementation
         const entity = new DepresionTypeDAL({
             id: item.id,
             tipo_depresion: item.tipoDepresion,
-            cantidad_sintomas: item.cantidadSintomas
+            cantidad_sintomas: item.cantidadSintomas,
         });
 
         return entity;
@@ -124,8 +134,12 @@ export class DepresionTypesSQLImplementation
         const entity = new DepresionTypeDOM({
             id: item.id,
             tipoDepresion: item.tipo_depresion,
-            cantidadSintomas: item.cantidad_sintomas
+            cantidadSintomas: item.cantidad_sintomas,
         });
+
+        if (item.symptoms) {
+            entity.symptoms = item.symptoms.map(fromSnakeToCamel);
+        }
 
         return entity;
     }
@@ -141,6 +155,16 @@ export class DepresionTypesSQLImplementation
                 case 'tipoDepresion':
                     mapFilter[camelToSnake(key)] = {
                         [Op.iLike]: `${item[key]}%`,
+                    };
+                    break;
+                case 'cantidadSintomas':
+                    mapFilter[camelToSnake(key)] = {
+                        [Op.gte]: item[key],
+                    };
+                    break;
+                case 'sintomasAsociados':
+                    mapFilter['$symptoms.id$'] = {
+                        [Op.in]: item[key],
                     };
                     break;
             }
