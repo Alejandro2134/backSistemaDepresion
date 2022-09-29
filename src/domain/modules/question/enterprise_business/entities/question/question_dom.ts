@@ -10,8 +10,10 @@ export interface IQuestionDOM {
 }
 
 export interface IQuestionFDOM {
+    sintomas?: number[];
     id?: number;
     pregunta?: string;
+    preguntasRespondidas?: number[];
 }
 
 export class QuestionDOM implements IQuestionDOM {

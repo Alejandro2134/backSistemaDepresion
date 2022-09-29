@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.3.1
+  version: 1.3.2
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -21,6 +21,8 @@ tags:
     description: Depresion Type routes
   - name: dictionary
     description: Dictionary routes
+  - name: inference-motor
+    description: Inference motor routes
 paths:
   #USER
   /v1/users/create-one:
@@ -829,6 +831,42 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+
+  #INFERENCE MOTOR
+  /v1/inference-motor/run-diagnosis:
+    post:
+      tags:
+        - inference-motor
+      summary: run diagnosis
+      description: http://localhost:3000/v1/inference-motor/run-diagnosis
+      operationId: inference-motor:run-diagnosis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/inference-motor-run-diagnosis"
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: everything went fine
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+
   #COMMON
   /:
     get:
@@ -1009,6 +1047,115 @@ components:
         descripcion:
           type: string
           example: Transtorno
+    #INFERENCE MOTOR
+    inference-motor-run-diagnosis:
+      title: inference-motor-run-diagnosis
+      type: object
+      properties:
+        id_pregunta_respondida:
+          type: number
+          example: 1
+        respuesta:
+          type: boolean
+          example: false
+        sintomas_pregunta_a_responder:
+          type: array
+          items:
+            type: number
+            example: 1
+        preguntas_respondidas:
+          type: array
+          items:
+            type: number
+            example: 1
+        preguntas_a_responder:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                example: 1
+              pregunta:
+                type: string
+                example: pregunta 1
+              sintomas:
+                type: array
+                items:
+                  type: number
+                  example: 1
+              symptoms:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      example: 1
+                    sintoma:
+                      type: string
+                      example: sintoma 1
+                    created_at:
+                      type: string
+                      example: "2022-09-17T15:38:58.893Z"
+                    updated_at:
+                      type: string
+                      example: "2022-09-17T15:38:58.893Z"
+                    tipos_depresion:
+                      type: array
+                      items:
+                        type: number
+                        example: 1
+        pregunta_a_responder:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 1
+            pregunta:
+              type: string
+              example: pregunta 1
+            sintomas:
+              type: array
+              items:
+                type: number
+                example: 1
+            symptoms:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  sintoma:
+                    type: string
+                    example: sintoma 1
+                  created_at:
+                    type: string
+                    example: "2022-09-17T15:38:58.893Z"
+                  updated_at:
+                    type: string
+                    example: "2022-09-17T15:38:58.893Z"
+                  tipos_depresion:
+                    type: array
+                    items:
+                      type: number
+                      example: 1
+        punto_inicial:
+          type: boolean
+          example: false
+        conteo_sintomas:
+          type: array
+          items:
+            type: object
+            properties:
+              id_sintoma:
+                type: number
+                example: 1
+              conteo:
+                type: number
+                example: 1
     #RESPONSES
     api_response:
       title: ApiResponse

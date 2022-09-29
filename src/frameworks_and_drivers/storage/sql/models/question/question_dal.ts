@@ -13,8 +13,9 @@ interface IOperators {
 }
 
 export interface IQuestionFDAL {
+    [index: string]: any;
     pregunta?: string | IOperators;
-    id?: number;
+    id?: number | IOperators;
 }
 
 export class QuestionDAL implements IQuestionDAL {

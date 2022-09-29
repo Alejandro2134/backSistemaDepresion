@@ -99,7 +99,16 @@ export class QuestionsSQLImplementation
 
     async getOne(id: number): Promise<QuestionDOM | null> {
         try {
-            const result = await Question.findByPk(id);
+            const result = await Question.findByPk(id, {
+                include: [
+                    {
+                        model: Symptom,
+                        through: {
+                            attributes: [],
+                        },
+                    },
+                ],
+            });
 
             if (result) {
                 const resDAL = result.get({ plain: true });
@@ -158,6 +167,16 @@ export class QuestionsSQLImplementation
                 case 'pregunta':
                     mapFilter[key] = {
                         [Op.iLike]: `${item[key]}%`,
+                    };
+                    break;
+                case 'sintomas':
+                    mapFilter['$symptoms.id$'] = {
+                        [Op.in]: item[key],
+                    };
+                    break;
+                case 'preguntasRespondidas':
+                    mapFilter['id'] = {
+                        [Op.notIn]: item[key],
                     };
                     break;
             }
