@@ -103,7 +103,16 @@ export class SymptomsSQLImplementation
 
     async getOne(id: number): Promise<SymptomDOM | null> {
         try {
-            const result = await Symptom.findByPk(id);
+            const result = await Symptom.findByPk(id, {
+                include: [
+                    {
+                        model: DepresionType,
+                        through: {
+                            attributes: [],
+                        },
+                    },
+                ],
+            });
 
             if (result) {
                 const resDAL = result.get({ plain: true });
