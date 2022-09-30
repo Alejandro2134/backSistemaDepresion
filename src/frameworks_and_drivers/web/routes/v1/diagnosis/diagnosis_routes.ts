@@ -9,5 +9,6 @@ const router = Router();
 
 router.post('/create-one', checkPermissions(false), controller.createOne);
 router.get('/get-all', checkPermissions(false), filter, controller.getAll);
+router.delete('/:id/delete-one', checkPermissions(true), controller.deleteOne);
 
 export { router };
