@@ -1,4 +1,4 @@
-interface IDiagnosisDOM {
+export interface IDiagnosisDOM {
     id?: number;
     cedula: string;
     nombre: string;
@@ -6,6 +6,7 @@ interface IDiagnosisDOM {
 }
 
 export interface IDiagnosisFDOM {
+    id?: number;
     cedula?: string;
     nombre?: string;
 }
@@ -21,5 +22,11 @@ export class DiagnosisDOM implements IDiagnosisDOM {
         this.cedula = item.cedula;
         this.nombre = item.nombre;
         this.resultado = item.resultado;
+    }
+
+    updateDiagnosis(item: IDiagnosisDOM) {
+        this.cedula = item?.cedula;
+        this.nombre = item?.nombre;
+        return Object.freeze(this);
     }
 }

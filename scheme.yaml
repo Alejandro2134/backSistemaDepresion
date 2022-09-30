@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.3.5
+  version: 1.3.6
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -983,6 +983,54 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
+  /v1/diagnosis/{id}/update-one:
+    put:
+      tags:
+        - diagnosis
+      summary: update one diagnosis
+      description: http://localhost:3000/v1/diagnosis/{id}/update-one
+      operationId: diagnosis:update-one
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/diagnosis-update-one"
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+            example: 1
+          description: The id of the diagnosis to update
+      responses:
+        "200":
+          description: diagnosis updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "404":
+          description: Not found diagnosis with provided id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404_not_found"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
 
   #COMMON
   /:
@@ -1287,6 +1335,16 @@ components:
         resultado:
           type: string
           example: Depresión
+    diagnosis-update-one:
+      title: diagnosis-update-one
+      type: object
+      properties:
+        cedula:
+          type: string
+          example: 1233912556
+        nombre:
+          type: string
+          example: Daniel Hernandez
     #RESPONSES
     api_response:
       title: ApiResponse

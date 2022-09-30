@@ -9,6 +9,7 @@ interface IOperators {
     [index: symbol]: any;
 }
 export interface IDiagnosisFDAL {
+    id?: number;
     cedula?: string | IOperators;
     nombre?: string | IOperators;
 }

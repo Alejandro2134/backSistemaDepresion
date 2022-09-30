@@ -112,6 +112,9 @@ export class DiagnosisSQLImplementation
 
         for (const key in item) {
             switch (key) {
+                case 'id':
+                    mapFilter[key] = item[key];
+                    break;
                 case 'cedula':
                     mapFilter[key] = {
                         [Op.iLike]: `${item[key]}%`,
