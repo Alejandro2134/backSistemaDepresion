@@ -37,6 +37,9 @@
       ],
       "@inference_motor/*": [
         "domain/modules/inference_motor/*"
+      ],
+      "@diagnosis/*": [
+        "domain/modules/diagnosis/*"
       ]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
   },
