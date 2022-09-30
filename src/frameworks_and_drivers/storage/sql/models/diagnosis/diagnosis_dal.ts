@@ -5,9 +5,12 @@ export interface IDiagnosisDAL {
     resultado: string;
 }
 
+interface IOperators {
+    [index: symbol]: any;
+}
 export interface IDiagnosisFDAL {
-    cedula?: string;
-    nombre?: string;
+    cedula?: string | IOperators;
+    nombre?: string | IOperators;
 }
 
 export class DiagnosisDAL implements IDiagnosisDAL {

@@ -3,6 +3,7 @@ import {
     DiagnosisDOM,
     IDiagnosisFDOM,
 } from 'domain/modules/diagnosis/enterprise_business/entities/diagnosis_dom';
+import { Op } from 'sequelize';
 import { BaseImplementation } from '../../client/driver/base_sql_impl';
 import { IOptions } from '../../client/interfaces/ioperations';
 import { IFilterWrapper, IWrapper } from '../../client/interfaces/iwrapper';
@@ -107,7 +108,24 @@ export class DiagnosisSQLImplementation
     }
 
     filterDomToDal(item: IDiagnosisFDOM): IDiagnosisFDAL {
-        throw new Error('Method not implemented.');
+        const mapFilter: IDiagnosisFDAL = {};
+
+        for (const key in item) {
+            switch (key) {
+                case 'cedula':
+                    mapFilter[key] = {
+                        [Op.iLike]: `${item[key]}%`,
+                    };
+                    break;
+                case 'nombre':
+                    mapFilter[key] = {
+                        [Op.iLike]: `${item[key]}%`,
+                    };
+                    break;
+            }
+        }
+
+        return mapFilter;
     }
 
     fromDomToDal(item: DiagnosisDOM): DiagnosisDAL {
