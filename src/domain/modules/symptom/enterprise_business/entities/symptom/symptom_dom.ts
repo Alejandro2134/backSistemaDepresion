@@ -12,6 +12,7 @@ export interface ISymptomDOM {
 export interface ISymptomFDOM {
     id?: number;
     sintoma?: string;
+    tiposDepresion?: number[];
 }
 
 export class SymptomDOM implements ISymptomDOM {

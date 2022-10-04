@@ -71,8 +71,6 @@ export class SymptomsSQLImplementation
                 },
             });
 
-            //TODO: Eliminar id de sintomas relacionados en las preguntas
-
             return res;
         } catch (error) {
             throw new StorageError(error);
@@ -171,6 +169,11 @@ export class SymptomsSQLImplementation
                 case 'sintoma':
                     mapFilter[key] = {
                         [Op.iLike]: `${item[key]}%`,
+                    };
+                    break;
+                case 'tiposDepresion':
+                    mapFilter['$depresion_types.id$'] = {
+                        [Op.in]: item[key],
                     };
                     break;
             }
