@@ -1,4 +1,3 @@
-import { ErrorResourceNotFound } from '@common/enterprise_business_rules/dto/errors/resource_not_found';
 import {
     DepresionTypeDOM,
     IDepresionTypeFDOM,
@@ -24,8 +23,6 @@ type Dependencies = {
     depresionTypesRepo: IOperations<DepresionTypeDOM, IDepresionTypeFDOM>;
     symptomsRepo: IOperations<SymptomDOM, ISymptomFDOM>;
 };
-
-const QUESTIONS_NOT_FOUND = 'No more questions found';
 
 const build = ({
     questionsRepo,
@@ -136,7 +133,17 @@ const build = ({
                             null
                         );
                     } else {
-                        throw new ErrorResourceNotFound(QUESTIONS_NOT_FOUND);
+                        return buildInferenceMotorDOM(
+                            -1,
+                            false,
+                            null,
+                            [],
+                            [],
+                            [],
+                            true,
+                            [],
+                            'No hay mas tipos de depresión'
+                        );
                     }
                 }
                 //SI las respuesta es que no
@@ -196,7 +203,17 @@ const build = ({
             inferenceMotor.preguntasAResponder.splice(randomQuestion, 1);
             return inferenceMotor;
         } else {
-            throw new ErrorResourceNotFound(QUESTIONS_NOT_FOUND);
+            return buildInferenceMotorDOM(
+                -1,
+                false,
+                null,
+                [],
+                [],
+                [],
+                true,
+                [],
+                'No hay mas tipos de depresión'
+            );
         }
     };
 
