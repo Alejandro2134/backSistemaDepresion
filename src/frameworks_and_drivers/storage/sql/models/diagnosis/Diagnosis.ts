@@ -1,12 +1,14 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelizeConnection } from "../../client/client";
-import { IDiagnosisDAL } from "./diagnosis_dal";
+import { DataTypes, Model } from 'sequelize';
+import { sequelizeConnection } from '../../client/client';
+import { IDiagnosisDAL } from './diagnosis_dal';
 
 export class Diagnosis extends Model<IDiagnosisDAL> implements IDiagnosisDAL {
     id!: number;
     cedula!: string;
     nombre!: string;
     resultado!: string;
+    observaciones!: string;
+    fecha_creacion!: string;
 }
 
 Diagnosis.init(
@@ -28,7 +30,14 @@ Diagnosis.init(
         resultado: {
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
+        observaciones: {
+            type: DataTypes.TEXT,
+        },
+        fecha_creacion: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
     },
     {
         sequelize: sequelizeConnection,
@@ -36,4 +45,4 @@ Diagnosis.init(
         modelName: 'diagnosis',
         freezeTableName: true,
     }
-)
+);

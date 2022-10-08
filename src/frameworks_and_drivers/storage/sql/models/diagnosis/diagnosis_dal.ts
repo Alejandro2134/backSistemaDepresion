@@ -3,6 +3,8 @@ export interface IDiagnosisDAL {
     cedula: string;
     nombre: string;
     resultado: string;
+    observaciones: string;
+    fecha_creacion: string;
 }
 
 interface IOperators {
@@ -19,11 +21,15 @@ export class DiagnosisDAL implements IDiagnosisDAL {
     cedula: string;
     nombre: string;
     resultado: string;
+    observaciones: string;
+    fecha_creacion: string;
 
     constructor(item: IDiagnosisDAL) {
         this.id = item.id;
         this.cedula = item.cedula;
         this.nombre = item.nombre;
         this.resultado = item.resultado;
+        this.observaciones = item.observaciones;
+        this.fecha_creacion = item.fecha_creacion;
     }
 }

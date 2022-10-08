@@ -9,6 +9,7 @@ export class DiagnosisMapper implements IMapperAPI<DiagnosisDOM, DiagnosisAPI> {
             cedula: item.cedula,
             nombre: item.nombre,
             resultado: item.resultado,
+            observaciones: item.observaciones,
         });
 
         return dom;
@@ -20,6 +21,8 @@ export class DiagnosisMapper implements IMapperAPI<DiagnosisDOM, DiagnosisAPI> {
             cedula: item.cedula,
             nombre: item.nombre,
             resultado: item.resultado,
+            observaciones: item.observaciones,
+            fecha_creacion: item.fechaCreacion,
         });
 
         return api;

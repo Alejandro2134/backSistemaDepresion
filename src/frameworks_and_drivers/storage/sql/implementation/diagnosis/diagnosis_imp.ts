@@ -137,6 +137,8 @@ export class DiagnosisSQLImplementation
             nombre: item.nombre,
             resultado: item.resultado,
             id: item.id,
+            fecha_creacion: item.fechaCreacion ? item.fechaCreacion : '',
+            observaciones: item.observaciones,
         });
 
         return itemDAL;
@@ -148,6 +150,8 @@ export class DiagnosisSQLImplementation
             nombre: item.nombre,
             resultado: item.resultado,
             id: item.id,
+            observaciones: item.observaciones,
+            fechaCreacion: item.fecha_creacion,
         });
 
         return itemDOM;

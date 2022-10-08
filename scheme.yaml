@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.3.6
+  version: 1.3.7
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -1335,6 +1335,9 @@ components:
         resultado:
           type: string
           example: Depresión
+        observaciones:
+          type: string
+          example: observaciones diagnostico
     diagnosis-update-one:
       title: diagnosis-update-one
       type: object
@@ -1345,6 +1348,9 @@ components:
         nombre:
           type: string
           example: Daniel Hernandez
+        observaciones:
+          type: string
+          example: observaciones diagnostico
     #RESPONSES
     api_response:
       title: ApiResponse
