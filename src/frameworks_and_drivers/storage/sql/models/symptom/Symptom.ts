@@ -32,7 +32,7 @@ Symptom.init(
             allowNull: false,
         },
         sintoma: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         tipos_depresion: {
