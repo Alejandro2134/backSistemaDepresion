@@ -20,13 +20,13 @@ DepresionType.init(
             allowNull: false,
         },
         tipo_depresion: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         cantidad_sintomas: {
             type: DataTypes.INTEGER,
-            allowNull: false
-        }
+            allowNull: false,
+        },
     },
     {
         sequelize: sequelizeConnection,
