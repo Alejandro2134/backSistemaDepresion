@@ -29,7 +29,7 @@ Question.init(
             allowNull: false,
         },
         pregunta: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         sintomas: {
