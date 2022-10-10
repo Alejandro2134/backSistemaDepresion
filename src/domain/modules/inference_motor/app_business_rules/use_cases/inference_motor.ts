@@ -133,7 +133,7 @@ const build = ({
                             null
                         );
                     } else {
-                        sendRandomQuestion(item);
+                        return await sendRandomQuestion(item);
                     }
                 }
                 //SI las respuesta es que no
