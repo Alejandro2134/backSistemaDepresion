@@ -70,4 +70,20 @@ export class DiagnosisController {
             next(err);
         }
     }
+
+    async generatePdf(req: any, res: Response, next: NextFunction) {
+        try {
+            const { filter } = req.query;
+            const result = await service.generatePdf(filter);
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader(
+                'Content-Disposition',
+                'attachment; filename=quote.pdf'
+            );
+            result.pipe(res);
+            result.end();
+        } catch (err) {
+            next(err);
+        }
+    }
 }

@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: sistema-depresion
   description: Api Web
-  version: 1.3.7
+  version: 1.3.8
 servers:
   - url: http://localhost:3000
     description: "Local server"
@@ -1031,7 +1031,47 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/error"
-
+  /v1/diagnosis/generate-pdf:
+    get:
+      tags:
+        - diagnosis
+      summary: generate pdf
+      description: http://localhost:3000/v1/diagnosis/generate-pdf
+      operationId: diagnosis:generate-pdf
+      parameters:
+        - in: query
+          name: cedula
+          required: false
+          schema:
+            type: string
+            example: 1233912552
+        - in: query
+          name: nombre
+          required: false
+          schema:
+            type: string
+            example: Andres Lopez
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: get pdf
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/response"
+        "401":
+          description: Access token doesn't have the required permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
+        "403":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/error"
   #COMMON
   /:
     get:

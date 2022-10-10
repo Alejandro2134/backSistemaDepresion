@@ -11,5 +11,11 @@ router.post('/create-one', checkPermissions(false), controller.createOne);
 router.get('/get-all', checkPermissions(false), filter, controller.getAll);
 router.delete('/:id/delete-one', checkPermissions(true), controller.deleteOne);
 router.put('/:id/update-one', checkPermissions(false), controller.updateOne);
+router.get(
+    '/generate-pdf',
+    checkPermissions(false),
+    filter,
+    controller.generatePdf
+);
 
 export { router };
