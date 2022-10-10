@@ -13,6 +13,8 @@ export class InferenceMotorMapper
             preguntaAResponder: fromSnakeToCamel(item.pregunta_a_responder),
             preguntasAResponder:
                 item.preguntas_a_responder.map(fromSnakeToCamel),
+            tiposDepresionPreguntaAResponder:
+                item.tipos_depresion_pregunta_a_responder,
             preguntasRespondidas: item.preguntas_respondidas,
             respuesta: item.respuesta,
             sintomasPreguntaAResponder: item.sintomas_pregunta_a_responder,
@@ -36,6 +38,8 @@ export class InferenceMotorMapper
             punto_inicial: item.puntoInicial,
             conteo_sintomas: item.conteoSintomas.map(fromCamelToSnake),
             tipo_depresion: item.tipoDepresion,
+            tipos_depresion_pregunta_a_responder:
+                item.tiposDepresionPreguntaAResponder,
         });
 
         return api;

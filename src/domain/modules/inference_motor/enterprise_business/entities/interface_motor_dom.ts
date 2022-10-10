@@ -3,6 +3,7 @@ import { IQuestionDOM } from '@questions/enterprise_business/entities/question/q
 export interface IInferenceMotorDOM {
     idPreguntaRespondida: number;
     respuesta: boolean;
+    tiposDepresionPreguntaAResponder: number[];
     sintomasPreguntaAResponder: number[];
     preguntasRespondidas: number[];
     preguntasAResponder: IQuestionDOM[];
@@ -20,6 +21,7 @@ export interface IConteoSintomas {
 export class InferenceMotorDOM implements IInferenceMotorDOM {
     idPreguntaRespondida: number;
     respuesta: boolean;
+    tiposDepresionPreguntaAResponder: number[];
     sintomasPreguntaAResponder: number[];
     preguntasRespondidas: number[];
     preguntasAResponder: IQuestionDOM[];
@@ -32,6 +34,8 @@ export class InferenceMotorDOM implements IInferenceMotorDOM {
         this.respuesta = item.respuesta;
         this.idPreguntaRespondida = item.idPreguntaRespondida;
         this.sintomasPreguntaAResponder = item.sintomasPreguntaAResponder;
+        this.tiposDepresionPreguntaAResponder =
+            item.tiposDepresionPreguntaAResponder;
         this.preguntasRespondidas = item.preguntasRespondidas;
         this.preguntasAResponder = item.preguntasAResponder;
         this.preguntaAResponder = item.preguntaAResponder;

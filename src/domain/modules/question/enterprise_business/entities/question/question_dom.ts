@@ -5,6 +5,7 @@ export interface IQuestionDOM {
     pregunta: string;
     sintomas: number[];
     removerSintomas?: number[];
+    tiposDepresionSintomas?: number[];
     /**Not logic params */
     symptoms?: ISymptomDOM[];
 }
@@ -14,6 +15,7 @@ export interface IQuestionFDOM {
     id?: number;
     pregunta?: string;
     preguntasRespondidas?: number[];
+    tiposDepresionSintomas?: number[];
 }
 
 export class QuestionDOM implements IQuestionDOM {
@@ -21,6 +23,7 @@ export class QuestionDOM implements IQuestionDOM {
     pregunta: string;
     sintomas: number[];
     removerSintomas?: number[];
+    tiposDepresionSintomas?: number[];
     /**Not logic params */
     symptoms?: ISymptomDOM[];
 
@@ -29,6 +32,7 @@ export class QuestionDOM implements IQuestionDOM {
         this.pregunta = item.pregunta;
         this.sintomas = item.sintomas;
         this.removerSintomas = item.removerSintomas;
+        this.tiposDepresionSintomas = item.tiposDepresionSintomas;
     }
 
     updateQuestion(item: IQuestionDOM) {

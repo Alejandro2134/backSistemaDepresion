@@ -1223,6 +1223,11 @@ components:
         respuesta:
           type: boolean
           example: false
+        tipos_depresion_pregunta_a_responder:
+          type: array
+          items:
+            type: number
+            example: 1
         sintomas_pregunta_a_responder:
           type: array
           items:

@@ -108,14 +108,16 @@ const build = ({
                         [],
                         [],
                         [],
+                        [],
                         true,
                         [],
                         stringDepresionTypes
                     );
                 } else {
-                    //Si no se traen las preguntas filtrando por sintomas y preguntas respondidas
+                    //Si no se traen las preguntas filtrando por tipos de depresión y preguntas respondidas
                     const questions = await questionsRepo.getAll({
-                        sintomas: item.sintomasPreguntaAResponder,
+                        tiposDepresionSintomas:
+                            item.tiposDepresionPreguntaAResponder,
                         preguntasRespondidas: item.preguntasRespondidas,
                     });
 
@@ -125,6 +127,7 @@ const build = ({
                             -1,
                             false,
                             questions[0],
+                            questions[0].tiposDepresionSintomas || [],
                             questions[0].sintomas,
                             questions.slice(1, questions.length),
                             answeredQuestions,
@@ -147,6 +150,8 @@ const build = ({
                             -1,
                             false,
                             item.preguntasAResponder[0],
+                            item.preguntasAResponder[0]
+                                .tiposDepresionSintomas || [],
                             item.preguntasAResponder[0].sintomas,
                             item.preguntasAResponder.slice(
                                 1,
@@ -182,6 +187,7 @@ const build = ({
                 -1,
                 false,
                 questions[randomQuestion],
+                questions[randomQuestion].tiposDepresionSintomas || [],
                 questions[randomQuestion].sintomas,
                 questions,
                 answeredQuestions,
@@ -200,6 +206,7 @@ const build = ({
                 [],
                 [],
                 [],
+                [],
                 true,
                 [],
                 'No hay mas tipos de depresión'
@@ -211,6 +218,7 @@ const build = ({
         idPreguntaRespondida: number,
         respuesta: boolean,
         preguntaAResponder: IQuestionDOM | null,
+        tiposDepresionPreguntaAResponder: number[],
         sintomasPreguntaAResponder: number[],
         preguntasAResponder: IQuestionDOM[],
         preguntasRespondidas: number[],
@@ -222,6 +230,7 @@ const build = ({
             idPreguntaRespondida: idPreguntaRespondida,
             respuesta: respuesta,
             preguntaAResponder: preguntaAResponder,
+            tiposDepresionPreguntaAResponder: tiposDepresionPreguntaAResponder,
             sintomasPreguntaAResponder: sintomasPreguntaAResponder,
             preguntasAResponder: preguntasAResponder,
             preguntasRespondidas: preguntasRespondidas,

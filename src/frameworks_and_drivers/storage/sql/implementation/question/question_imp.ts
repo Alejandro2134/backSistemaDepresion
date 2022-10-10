@@ -10,6 +10,7 @@ import { Question } from '@fnd/storage/sql/models/question/Question';
 import { Op } from 'sequelize';
 import { Symptom } from '../../models/symptom/Symptom';
 import { fromSnakeToCamel } from '@fnd/helpers/from_snake_to_camel';
+import { DepresionType } from '../../models/depresion_type/DepresionType';
 
 export class QuestionsSQLImplementation
     extends BaseImplementation<QuestionDOM, IQuestionFDOM>
@@ -85,6 +86,14 @@ export class QuestionsSQLImplementation
                         through: {
                             attributes: [],
                         },
+                        include: [
+                            {
+                                model: DepresionType,
+                                through: {
+                                    attributes: [],
+                                },
+                            },
+                        ],
                     },
                 ],
             });
@@ -106,12 +115,21 @@ export class QuestionsSQLImplementation
                         through: {
                             attributes: [],
                         },
+                        include: [
+                            {
+                                model: DepresionType,
+                                through: {
+                                    attributes: [],
+                                },
+                            },
+                        ],
                     },
                 ],
             });
 
             if (result) {
                 const resDAL = result.get({ plain: true });
+                console.log(resDAL);
                 const resDOM = this.fromDalToDom(resDAL);
                 return resDOM;
             } else {
@@ -147,10 +165,17 @@ export class QuestionsSQLImplementation
             id: item.id,
             pregunta: item.pregunta,
             sintomas: item.sintomas,
+            tiposDepresionSintomas: [],
         });
 
         if (item.symptoms) {
             entity.symptoms = item.symptoms.map(fromSnakeToCamel);
+            item.symptoms.map((symptom) => {
+                entity.tiposDepresionSintomas =
+                    entity.tiposDepresionSintomas?.concat(
+                        symptom.tipos_depresion
+                    );
+            });
         }
 
         return entity;
@@ -177,6 +202,11 @@ export class QuestionsSQLImplementation
                 case 'preguntasRespondidas':
                     mapFilter['id'] = {
                         [Op.notIn]: item[key],
+                    };
+                    break;
+                case 'tiposDepresionSintomas':
+                    mapFilter['$symptoms.depresion_types.id$'] = {
+                        [Op.in]: item[key],
                     };
                     break;
             }

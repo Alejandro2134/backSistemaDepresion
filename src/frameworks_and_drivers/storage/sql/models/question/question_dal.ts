@@ -4,6 +4,7 @@ export interface IQuestionDAL {
     id?: number;
     pregunta: string;
     sintomas: number[];
+    tipos_depresion_sintomas?: number[];
     /**Not logic params */
     symptoms?: ISymptomDAL[];
 }
@@ -22,6 +23,7 @@ export class QuestionDAL implements IQuestionDAL {
     id?: number;
     pregunta: string;
     sintomas: number[];
+    tipos_depresion_sintomas?: number[];
     /**Not logic params */
     symptoms?: ISymptomDAL[];
 
@@ -29,5 +31,6 @@ export class QuestionDAL implements IQuestionDAL {
         this.id = item.id;
         this.pregunta = item.pregunta;
         this.sintomas = item.sintomas;
+        this.tipos_depresion_sintomas = item.tipos_depresion_sintomas;
     }
 }
