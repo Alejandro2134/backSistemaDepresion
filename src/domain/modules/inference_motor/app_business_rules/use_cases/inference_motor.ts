@@ -133,17 +133,7 @@ const build = ({
                             null
                         );
                     } else {
-                        return buildInferenceMotorDOM(
-                            -1,
-                            false,
-                            null,
-                            [],
-                            [],
-                            [],
-                            true,
-                            [],
-                            'No hay mas tipos de depresión'
-                        );
+                        sendRandomQuestion(item);
                     }
                 }
                 //SI las respuesta es que no
