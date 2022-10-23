@@ -24,7 +24,7 @@ type Dependencies = {
     symptomsRepo: IOperations<SymptomDOM, ISymptomFDOM>;
 };
 
-const NO_MORE_DEPRESION_TYPES_MSG =
+const NO_MORE_QUESTIONS_MSG =
     'Los sintomas no clasifican o se asocian con el transtorno depresivo';
 
 const build = ({
@@ -212,7 +212,7 @@ const build = ({
                 [],
                 true,
                 [],
-                NO_MORE_DEPRESION_TYPES_MSG
+                NO_MORE_QUESTIONS_MSG
             );
         }
     };
